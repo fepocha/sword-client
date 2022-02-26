@@ -1,7 +1,7 @@
 export default function TutorialPage() {
   return (
     <section>
-      <h1>Tutorial</h1>
+      <h2>Tutorial</h2>
     </section>
   );
 }

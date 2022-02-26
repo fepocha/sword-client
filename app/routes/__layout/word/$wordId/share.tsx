@@ -1,13 +1,12 @@
 import { useParams } from "remix";
 
-export default function GamePlayPage() {
+export default function SharePage() {
   const params = useParams();
   console.log(params.wordId);
 
   return (
     <section>
-      <h1>Play page</h1>
-      {/* <h1>Play result</h1> */}
+      <h2>External share page</h2>
     </section>
   );
 }
