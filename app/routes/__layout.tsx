@@ -4,7 +4,7 @@ export default function Layout() {
   return (
     <>
       <header>
-        <h1>SWORD</h1>
+        <h1>Wordssay</h1>
         <nav>
           <ul>
             <li>

@@ -8,7 +8,7 @@ import {
 } from "remix";
 import type { MetaFunction } from "remix";
 
-export const meta: MetaFunction = () => ({ title: "Sword" });
+export const meta: MetaFunction = () => ({ title: "Wordssay" });
 
 export default function App() {
   return (
