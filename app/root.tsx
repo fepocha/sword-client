@@ -6,9 +6,11 @@ import {
   Scripts,
   ScrollRestoration
 } from "remix";
-import type { MetaFunction } from "remix";
+import type { MetaFunction, LinksFunction } from "remix";
+import styles from "./styles/normalize.css"
 
 export const meta: MetaFunction = () => ({ title: "Wordssay" });
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }]
 
 export default function App() {
   return (
