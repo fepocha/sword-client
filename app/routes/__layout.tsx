@@ -1,8 +1,9 @@
 import { NavLink, Outlet } from "remix";
+import { ThemeToggle } from "~/components/layout/ThemeToggle";
 
 export default function Layout() {
   return (
-    <>
+    <div className="w-full min-h-screen bg-white-light text-black-dark">
       <header>
         <h1>Wordssay</h1>
         <nav>
@@ -36,11 +37,12 @@ export default function Layout() {
             </li>
           </ul>
         </nav>
+        <ThemeToggle />
       </header>
       <main>
         <Outlet />
       </main>
       <footer>Footer</footer>
-    </>
+    </div>
   );
 }
