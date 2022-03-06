@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-white-light: 255, 255, 255; /* #fff */
+  --color-white-mid: 255, 248, 225; /* #FFF8E1 */
+  --color-white-dark: 255, 236, 174; /* #ffecae */
+
+  --color-gray-light: 214, 214, 214; /* #d6d6d6 */
+  --color-gray-mid: 189, 189, 189; /* #BDBDBD */
+  --color-gray-dark: 163, 163, 163; /* #a3a3a3 */
+
+  --color-black-light: 122, 122, 122; /* #7a7a7a */
+  --color-black-mid: 71, 71, 71; /* #474747 */
+  --color-black-dark: 34, 34, 34; /* #222 */
+
+  --color-orange-light: 255, 204, 128; /* #ffcc80 */
+  --color-orange-mid: 255, 183, 77; /* #FFB74D */
+  --color-orange-dark: 255, 162, 26; /* #ffa21a */
+
+  --color-blue-mid: 77, 149, 255; /* #4d95ff */
+}
+
+:root.dark {
+  --color-white-light: 34, 34, 34; /* #222 */
+  --color-white-mid: 71, 71, 71; /* #474747 */
+  --color-white-dark: 122, 122, 122; /* #7a7a7a */
+
+  --color-gray-light: 163, 163, 163; /* #a3a3a3 */
+  --color-gray-mid: 189, 189, 189; /* #BDBDBD */
+  --color-gray-dark: 214, 214, 214; /* #d6d6d6 */
+
+  --color-black-light: 255, 236, 174; /* #ffecae */
+  --color-black-mid: 255, 248, 225; /* #FFF8E1 */
+  --color-black-dark: 255, 255, 255; /* #fff */
+
+  --color-orange-light: 229, 183, 115; /* #e5b773 */
+  --color-orange-mid: 229, 164, 68; /* #e5a444 */
+  --color-orange-dark: 221, 141, 24; /* #dd8d18 */
+
+  --color-blue-mid: 67, 130, 223; /* #4382df */
+}

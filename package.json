@@ -11,7 +11,7 @@
     "dev": "run-p dev:*",
     "dev:css": "npm run generate:css -- --watch",
     "dev:remix": "cross-env NODE_ENV=development remix dev",
-    "generate:css": "npx tailwindcss -o ./app/styles/tailwind.css",
+    "generate:css": "npx tailwindcss -i ./tailwind.custom.css -o ./app/styles/tailwind.css",
     "postinstall": "remix setup node",
     "start": "cross-env NODE_ENV=production remix-serve build",
     "lint": "eslint 'app/**/*.{ts,tsx}'",
