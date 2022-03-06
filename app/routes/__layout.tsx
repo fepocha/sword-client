@@ -3,7 +3,7 @@ import { ThemeToggle } from "~/components/layout/ThemeToggle";
 
 export default function Layout() {
   return (
-    <div className="w-full min-h-screen bg-white-light text-black-dark">
+    <div className="main-container">
       <header>
         <h1>Wordssay</h1>
         <nav>
