@@ -7,7 +7,7 @@ import {
   ScrollRestoration
 } from "remix";
 import type { MetaFunction, LinksFunction } from "remix";
-import styles from "./styles/normalize.css"
+import styles from "./styles/tailwind.css"
 
 export const meta: MetaFunction = () => ({ title: "Wordssay" });
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }]
