@@ -4,31 +4,33 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'plugin:react/recommended',
-    'airbnb',
+    "plugin:react/recommended",
+    "airbnb",
     "prettier",
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     project: "./tsconfig.json",
     tsconfigRootDir: __dirname,
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 'latest',
-    sourceType: 'module',
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
   plugins: [
-    'react',
-    '@typescript-eslint',
+    "react",
+    "@typescript-eslint",
     "prettier",
     "simple-import-sort",
     "jsx-a11y",
   ],
   rules: {
     "simple-import-sort/exports": "error",
+    "import/prefer-default-export": "off",
 
-    "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "import/extensions": "off",
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "react/no-array-index-key": "warn",
@@ -42,5 +44,13 @@ module.exports = {
     "react/jsx-first-prop-new-line": ["error", "multiline"],
 
     "no-trailing-spaces": ["error", { "skipBlankLines": false, "ignoreComments": false }],
+  },
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {}
+    },
   },
 };
