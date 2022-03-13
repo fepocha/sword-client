@@ -44,6 +44,6 @@
 
 @layer components {
   .main-container {
-    @apply w-full min-h-screen bg-white-light text-black-dark
+    @apply w-full min-h-screen bg-white-mid text-black-dark
   }
 }
