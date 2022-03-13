@@ -4,17 +4,37 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
+  useLoaderData
 } from "remix";
-import type { MetaFunction, LinksFunction } from "remix";
+import type { MetaFunction, LinksFunction, LoaderFunction } from "remix";
+import clsx from 'clsx';
+import { getThemeSession } from "~/sessions/theme.server";
 import styles from "./styles/tailwind.css"
+import { Theme, ThemeProvider, useThemeContext } from "./context/theme";
+
+type LoaderData = {
+  theme: Theme;
+};
 
 export const meta: MetaFunction = () => ({ title: "Wordssay" });
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }]
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
-export default function App() {
+export const loader: LoaderFunction = async ({ request }) => {
+  const themeSession = await getThemeSession(request);
+
+  const data: LoaderData = {
+    theme: themeSession.getTheme(),
+  };
+
+  return data;
+}
+
+function App() {
+  const { theme } = useThemeContext();
+
   return (
-    <html lang="ko">
+    <html lang="ko" className={clsx(theme)}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -28,5 +48,15 @@ export default function App() {
         <LiveReload />
       </body>
     </html>
+  );
+}
+
+export default function AppWithProvider() {
+  const data = useLoaderData<LoaderData>();
+
+  return (
+    <ThemeProvider ssrTheme={data.theme}>
+      <App />
+    </ThemeProvider>
   );
 }

@@ -30,6 +30,7 @@ module.exports = {
     "import/prefer-default-export": "off",
 
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/jsx-no-useless-fragment": "off",
     "import/extensions": "off",
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",

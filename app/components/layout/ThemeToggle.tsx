@@ -1,19 +1,13 @@
-import { useDarkmode } from "~/hooks/use-darkmode";
+import { useThemeContext } from '~/context/theme';
 
 export function ThemeToggle() {
-  const {isDarkmode, toggleDarkmode} = useDarkmode();
+  const {isDarkmode, toggleTheme} = useThemeContext();
 
   return (
     <div>
-      <label htmlFor="themeToggle">
+      <button type="button" onClick={toggleTheme}>
         {isDarkmode ? 'Dark' : 'Light'}
-        <input
-          id="themeToggle"
-          type="checkbox"
-          checked={isDarkmode}
-          onChange={toggleDarkmode}
-        />
-      </label>
+      </button>
     </div>
   )
 }

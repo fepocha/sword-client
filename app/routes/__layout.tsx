@@ -4,8 +4,7 @@ import { ThemeToggle } from "~/components/layout/ThemeToggle";
 export default function Layout() {
   return (
     <div className="main-container">
-      <header>
-        <h1>Wordssay</h1>
+      <header className="flex border-b-[1px] justify-between items-center px-[20px]">
         <nav>
           <ul>
             <li>
@@ -37,6 +36,7 @@ export default function Layout() {
             </li>
           </ul>
         </nav>
+        <h1>Wordssay</h1>
         <ThemeToggle />
       </header>
       <main>
