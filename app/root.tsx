@@ -6,14 +6,14 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData
-} from "remix";
-import type { MetaFunction, LinksFunction, LoaderFunction } from "remix";
+} from 'remix';
+import type { MetaFunction, LinksFunction, LoaderFunction } from 'remix';
 import clsx from 'clsx';
-import { getThemeSession } from "~/sessions/theme.server";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from 'react-query/devtools'
-import styles from "./styles/tailwind.css"
-import { Theme, ThemeProvider, useThemeContext } from "./context/theme";
+import { getThemeSession } from '~/sessions/theme.server';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import styles from './styles/tailwind.css';
+import { Theme, ThemeProvider, useThemeContext } from './context/theme';
 
 type LoaderData = {
   theme: Theme;
@@ -21,8 +21,8 @@ type LoaderData = {
 
 const queryClient = new QueryClient();
 
-export const meta: MetaFunction = () => ({ title: "Wordssay" });
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
+export const meta: MetaFunction = () => ({ title: 'Wordssay' });
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
 export const loader: LoaderFunction = async ({ request }) => {
   const themeSession = await getThemeSession(request);
@@ -32,7 +32,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   };
 
   return data;
-}
+};
 
 function App() {
   const { theme } = useThemeContext();

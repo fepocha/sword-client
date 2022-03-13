@@ -52,7 +52,7 @@ const useTheme = ({ ssrTheme }: SsrThemeProps): ThemeContextType => {
     theme,
     toggleTheme,
     isDarkmode: theme === Theme.DARK,
-  }
+  };
 };
 
 const ThemeContext = createContext<null | ThemeContextType>(null);

@@ -1,7 +1,7 @@
 import { useThemeContext } from '~/context/theme';
 
 export function ThemeToggle() {
-  const {isDarkmode, toggleTheme} = useThemeContext();
+  const { isDarkmode, toggleTheme } = useThemeContext();
 
   return (
     <div>
@@ -9,5 +9,5 @@ export function ThemeToggle() {
         {isDarkmode ? 'Dark' : 'Light'}
       </button>
     </div>
-  )
+  );
 }

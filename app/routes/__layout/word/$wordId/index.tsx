@@ -1,4 +1,4 @@
-import { useParams } from "remix";
+import { useParams } from 'remix';
 
 export default function GamePlayPage() {
   const params = useParams();

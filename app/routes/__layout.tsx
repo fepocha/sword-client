@@ -1,5 +1,5 @@
-import { NavLink, Outlet } from "remix";
-import { ThemeToggle } from "~/components/layout/ThemeToggle";
+import { NavLink, Outlet } from 'remix';
+import { ThemeToggle } from '~/components/layout/ThemeToggle';
 
 export default function Layout() {
   return (

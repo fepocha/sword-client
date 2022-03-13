@@ -45,6 +45,12 @@ module.exports = {
     "react/jsx-first-prop-new-line": ["error", "multiline"],
 
     "no-trailing-spaces": ["error", { "skipBlankLines": false, "ignoreComments": false }],
+    "semi": ["error", "always"],
+    "quotes": ["error", "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
+    "jsx-quotes": ["error", "prefer-double"],
+    "comma-dangle": ["error", "only-multiline"],
+    "object-curly-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "never"],
   },
   settings: {
     "import/parsers": {
