@@ -10,12 +10,16 @@ import {
 import type { MetaFunction, LinksFunction, LoaderFunction } from "remix";
 import clsx from 'clsx';
 import { getThemeSession } from "~/sessions/theme.server";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from 'react-query/devtools'
 import styles from "./styles/tailwind.css"
 import { Theme, ThemeProvider, useThemeContext } from "./context/theme";
 
 type LoaderData = {
   theme: Theme;
 };
+
+const queryClient = new QueryClient();
 
 export const meta: MetaFunction = () => ({ title: "Wordssay" });
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
@@ -42,7 +46,10 @@ function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
