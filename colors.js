@@ -29,6 +29,6 @@ module.exports = {
       dark: withOpacityValue('--color-orange-dark'),
     },
     blue: {
-      mid: withOpacityValue('--color-blue-light'),
+      mid: withOpacityValue('--color-blue-mid'),
     },
 }
