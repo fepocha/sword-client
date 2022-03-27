@@ -22,8 +22,18 @@ type LoaderData = {
 const queryClient = new QueryClient();
 
 export const meta: MetaFunction = () => ({ title: 'Wordssay' });
-export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
-
+export const links: LinksFunction = () => [
+  { rel: 'stylesheet', href: styles },
+  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Special+Elite&display=swap' }
+];
+/**
+ *
+ * <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+ */
 export const loader: LoaderFunction = async ({ request }) => {
   const themeSession = await getThemeSession(request);
 
