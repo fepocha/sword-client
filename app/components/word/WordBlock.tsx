@@ -8,7 +8,7 @@ interface Props {
 
 export function WordBlock({ characters = [], boardStatus = ['', '', '', '', ''] }: Props) {
   return (
-    <ul className="max-w-[400px] h-[50px] grid grid-cols-5 gap-5 mx-auto">
+    <ul className="max-w-[300px] h-[50px] grid grid-cols-5 gap-2 mx-auto">
       {new Array(5).fill(0).map((_, idx) => (
         <li
           key={`block-${idx}`}

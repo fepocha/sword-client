@@ -49,7 +49,7 @@ export function Keyboard({
 }: Props) {
   return (
     <>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-page grid grid-flow-row gap-3 px-[5px] pb-[20px] bg-white-mid">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-page grid grid-flow-row gap-3 px-[5px] pb-10 bg-white-mid">
         {KEYS.map((row, idx) => (
           <div
             key={`key-${idx}`}
