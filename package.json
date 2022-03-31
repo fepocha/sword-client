@@ -20,6 +20,7 @@
   "dependencies": {
     "@remix-run/react": "^1.2.2",
     "@remix-run/serve": "^1.2.2",
+    "classnames": "^2.3.1",
     "clsx": "^1.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
