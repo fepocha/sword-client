@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 
 type KeyType = 'character' | 'enter' | 'backspace';
-type Key = { value: string; type: KeyType };
+export type Key = { value: string; type: KeyType };
+
 const KEYS: Key[][] = [
   [
     { value: 'Q', type: 'character' },
