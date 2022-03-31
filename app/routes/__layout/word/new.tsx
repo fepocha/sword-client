@@ -7,13 +7,7 @@ export default function NewWordFormPage() {
       <h2 className="text-2xl">Add a new word.</h2>
       <WordBlock />
       <Keyboard
-        onCharacterClick={(key) => {
-          console.log(key);
-        }}
-        onBackspaceClick={(key) => {
-          console.log(key);
-        }}
-        onEnterClick={(key) => {
+        onKeyClick={(key) => {
           console.log(key);
         }}
       />

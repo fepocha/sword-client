@@ -39,24 +39,13 @@ const KEYS: Key[][] = [
   ],
 ];
 
-type OnKeyClick = (key: Key) => void;
 interface Props {
-  onBackspaceClick: OnKeyClick;
-  onEnterClick: OnKeyClick;
-  onCharacterClick: OnKeyClick;
+  onKeyClick: (key: Key) => void;
 }
 
 export function Keyboard({
-  onBackspaceClick,
-  onEnterClick,
-  onCharacterClick,
+  onKeyClick,
 }: Props) {
-  const KeyClickHandler: Record<KeyType, OnKeyClick> = {
-    'enter': onEnterClick,
-    'backspace': onBackspaceClick,
-    'character': onCharacterClick,
-  };
-
   return (
     <div className="grid grid-flow-row gap-3">
       {KEYS.map((row, idx) => (
@@ -70,7 +59,7 @@ export function Keyboard({
             <button
               type="button"
               key={key.value}
-              onClick={() => KeyClickHandler[key.type](key)}
+              onClick={() => onKeyClick(key)}
               className={classNames(
                 { 'text-xs': key.type === 'enter' || key.type === 'backspace' },
                 'flex justify-center items-center bg-white-light rounded-full py-1.5 border-2 border-black-dark text-md shadow-light active:shadow-md dark:shadow-dark dark:active:shadow-lg active:translate-y-1'
