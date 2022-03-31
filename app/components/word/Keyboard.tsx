@@ -1,43 +1,62 @@
 import classNames from 'classnames';
 
-const KEYS = [
+type KeyType = 'character' | 'enter' | 'backspace';
+type Key = { value: string; type: KeyType };
+const KEYS: Key[][] = [
   [
-    { value: 'Q' },
-    { value: 'W' },
-    { value: 'E' },
-    { value: 'R' },
-    { value: 'T' },
-    { value: 'Y' },
-    { value: 'U' },
-    { value: 'I' },
-    { value: 'O' },
-    { value: 'P' },
+    { value: 'Q', type: 'character' },
+    { value: 'W', type: 'character' },
+    { value: 'E', type: 'character' },
+    { value: 'R', type: 'character' },
+    { value: 'T', type: 'character' },
+    { value: 'Y', type: 'character' },
+    { value: 'U', type: 'character' },
+    { value: 'I', type: 'character' },
+    { value: 'O', type: 'character' },
+    { value: 'P', type: 'character' },
   ],
   [
-    { value: 'A' },
-    { value: 'S' },
-    { value: 'D' },
-    { value: 'F' },
-    { value: 'G' },
-    { value: 'H' },
-    { value: 'J' },
-    { value: 'K' },
-    { value: 'L' },
+    { value: 'A', type: 'character' },
+    { value: 'S', type: 'character' },
+    { value: 'D', type: 'character' },
+    { value: 'F', type: 'character' },
+    { value: 'G', type: 'character' },
+    { value: 'H', type: 'character' },
+    { value: 'J', type: 'character' },
+    { value: 'K', type: 'character' },
+    { value: 'L', type: 'character' },
   ],
   [
     { value: 'ENTER', type: 'enter' },
-    { value: 'Z' },
-    { value: 'X' },
-    { value: 'C' },
-    { value: 'V' },
-    { value: 'B' },
-    { value: 'N' },
-    { value: 'M' },
+    { value: 'Z', type: 'character' },
+    { value: 'X', type: 'character' },
+    { value: 'C', type: 'character' },
+    { value: 'V', type: 'character' },
+    { value: 'B', type: 'character' },
+    { value: 'N', type: 'character' },
+    { value: 'M', type: 'character' },
     { value: 'BACK', type: 'backspace' },
   ],
 ];
 
-export function Keyboard() {
+type OnKeyClick = (key: Key) => void;
+interface Props {
+  onBackspaceClick: OnKeyClick;
+  onEnterClick: OnKeyClick;
+  onCharacterClick: OnKeyClick;
+}
+
+export function Keyboard({
+  onBackspaceClick,
+  onEnterClick,
+  onCharacterClick,
+}: Props) {
+  const KeyClickHandler: Record<KeyType, OnKeyClick> = {
+    'enter': onEnterClick,
+    'backspace': onBackspaceClick,
+    'character': onCharacterClick,
+  };
+
   return (
     <div className="grid grid-flow-row gap-3">
       {KEYS.map((row, idx) => (
@@ -47,16 +66,17 @@ export function Keyboard() {
           { 'mx-[22px]': idx === 1 },
           'grid grid-flow-col gap-1.5'
           )}>
-          {row.map(({ value, type }) => (
+          {row.map((key) => (
             <button
               type="button"
-              key={value}
+              key={key.value}
+              onClick={() => KeyClickHandler[key.type](key)}
               className={classNames(
-                { 'text-xs': type },
+                { 'text-xs': key.type === 'enter' || key.type === 'backspace' },
                 'flex justify-center items-center bg-white-light rounded-full py-1.5 border-2 border-black-dark text-md shadow-light active:shadow-md dark:shadow-dark dark:active:shadow-lg active:translate-y-1'
               )}
             >
-              { value}
+              { key.value }
             </button>
           ))}
         </div>
