@@ -3,9 +3,9 @@
   --color-white-mid: 255 248 225; /* #FFF8E1 */
   --color-white-dark: 255 236 174; /* #ffecae */
 
-  --color-gray-light: 214 214 214; /* #d6d6d6 */
-  --color-gray-mid: 189 189 189; /* #BDBDBD */
-  --color-gray-dark: 163 163 163; /* #a3a3a3 */
+  --color-gray-light: 215 209 208; /* #d7d1d0*/
+  --color-gray-mid: 189 178 175; /* #bdb2af */
+  --color-gray-dark: 168 152 146; /* #a89892 */
 
   --color-black-light: 122 122 122; /* #7a7a7a */
   --color-black-mid: 71 71 71; /* #474747 */
@@ -15,7 +15,7 @@
   --color-orange-mid: 255 183 77; /* #FFB74D */
   --color-orange-dark: 255 162 26; /* #ffa21a */
 
-  --color-blue-mid: 77 149 255; /* #4d95ff */
+  --color-blue-mid: 104 165 255; /* #68a5ff */
 }
 
 :root.dark {
@@ -23,9 +23,9 @@
   --color-white-mid: 71 71 71; /* #474747 */
   --color-white-dark: 122 122 122; /* #7a7a7a */
 
-  --color-gray-light: 163 163 163; /* #a3a3a3 */
-  --color-gray-mid: 189 189 189; /* #BDBDBD */
-  --color-gray-dark: 214 214 214; /* #d6d6d6 */
+  --color-gray-light: 168 152 146; /* #a89892 */
+  --color-gray-mid: 189 178 175; /* #bdb2af */
+  --color-gray-dark: 215 209 208; /* #d7d1d0 */
 
   --color-black-light: 255 236 174; /* #ffecae */
   --color-black-mid: 255 248 225; /* #FFF8E1 */
@@ -45,6 +45,12 @@
 @layer components {
   .main-container {
     @apply w-full min-h-screen bg-white-mid text-black-dark
+  }
+  .main-title {
+    @apply text-2xl mb-10
+  }
+  .main-section {
+    @apply max-w-page px-2 mx-auto pt-10
   }
 }
 @layer base {
