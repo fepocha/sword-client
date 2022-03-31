@@ -3,7 +3,7 @@ import { WordBlock } from '~/components/word/WordBlock';
 
 export default function NewWordFormPage() {
   return (
-    <section className="max-w-[600px] px-2 mx-auto pt-10">
+    <section className="max-w-page px-2 mx-auto pt-10">
       <h2 className="text-2xl">Add a new word.</h2>
       <WordBlock />
       <Keyboard

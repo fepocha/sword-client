@@ -6,9 +6,12 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        'light': '0 4px 6px -1px rgba(0, 0, 0, 0.4)',
-        'dark': '0 10px 15px -3px rgba(0, 0, 0, 0.8)',
-      }
+        light: '0 4px 6px -1px rgba(0, 0, 0, 0.4)',
+        dark: '0 10px 15px -3px rgba(0, 0, 0, 0.8)',
+      },
+      maxWidth: {
+        page: '600px',
+      },
     },
     screens: {
       sm: '480px',
