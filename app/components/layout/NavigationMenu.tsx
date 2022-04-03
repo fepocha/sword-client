@@ -17,7 +17,7 @@ const NAVIGATION = [
   },
 ];
 
-export function Navigation() {
+export function NavigationMenu() {
   const [isExpanded, setExpanded] = useState(true);
 
   const handleMenuToggle = () => {
@@ -29,7 +29,7 @@ export function Navigation() {
       <button type="button" onClick={handleMenuToggle}>Menu</button>
       {isExpanded && (
         <nav className="fixed top-header left-0 w-full z-10 bg-white-mid text-center h-[calc(100vh-theme(space.header))] py-14">
-          <ul className="grid gap-8">
+          <ul className="grid gap-10">
             {NAVIGATION.map(({ path, displayName }) => (
               <li key={path} className="text-2xl">
                 <NavLink
