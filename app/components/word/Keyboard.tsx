@@ -49,13 +49,13 @@ export function Keyboard({
 }: Props) {
   return (
     <>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-page grid grid-flow-row gap-3 px-[5px] pb-10 bg-white-mid">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-page grid grid-flow-row gap-3 px-[8px] pb-10 bg-white-mid">
         {KEYS.map((row, idx) => (
           <div
             key={`key-${idx}`}
             className={classNames(
-          { 'mx-[22px]': idx === 1 },
-          'grid grid-flow-col gap-1.5'
+              { 'mx-[22px]': idx === 1 },
+              'grid grid-flow-col gap-1.5'
             )}>
             {row.map((key) => (
               <button
@@ -63,10 +63,10 @@ export function Keyboard({
                 key={key.value}
                 onClick={() => onKeyClick(key)}
                 className={classNames(
-                { 'text-xs': key.type === 'enter' || key.type === 'backspace' },
-                'flex justify-center items-center bg-white-light rounded-full py-1.5 border-2 border-black-dark text-md shadow-light active:shadow-md dark:shadow-dark dark:active:shadow-lg active:translate-y-0.5'
+                  { 'text-xs': key.type === 'enter' || key.type === 'backspace' },
+                  'flex justify-center items-center bg-white-light rounded-full py-1.5 border-2 border-black-dark text-md shadow-light active:shadow-md dark:shadow-dark dark:active:shadow-lg active:translate-y-0.5'
                 )}
-            >
+              >
                 { key.value }
               </button>
           ))}
