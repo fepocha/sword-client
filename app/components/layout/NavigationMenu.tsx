@@ -28,7 +28,7 @@ export function NavigationMenu() {
     <>
       <button type="button" onClick={handleMenuToggle}>Menu</button>
       {isExpanded && (
-        <nav className="fixed top-header left-0 w-full z-10 bg-white-mid text-center h-[calc(100vh-theme(space.header))] py-14">
+        <nav className="fixed top-header-height left-0 w-full z-10 bg-white-mid text-center h-[calc(100vh-theme(space.header-height))] py-14">
           <ul className="grid gap-10">
             {NAVIGATION.map(({ path, displayName }) => (
               <li key={path} className="text-2xl">

@@ -10,7 +10,7 @@ module.exports = {
         dark: '0 10px 15px -3px rgba(0, 0, 0, 0.8)',
       },
       spacing: {
-        header: '50px',
+        'header-height': '50px',
       },
       maxWidth: {
         page: '580px',
