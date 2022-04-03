@@ -28,7 +28,7 @@ export function Navigation() {
     <>
       <button type="button" onClick={handleMenuToggle}>Menu</button>
       {isExpanded && (
-        <nav className="fixed top-header left-0 w-full z-10 bg-white-mid text-center h-[calc(100vh-theme(space.header))] py-10">
+        <nav className="fixed top-header left-0 w-full z-10 bg-white-mid text-center h-[calc(100vh-theme(space.header))] py-14">
           <ul className="grid gap-8">
             {NAVIGATION.map(({ path, displayName }) => (
               <li key={path} className="text-2xl">
@@ -37,7 +37,7 @@ export function Navigation() {
                   prefetch="intent"
                   className={({ isActive }) => classNames('relative', { 'after:absolute after:bottom-0 after:left-0 after:block after:w-full after:h-2 after:bg-orange-dark after:-z-10': isActive })}
                   onClick={handleMenuToggle}
-              >
+                >
                   {displayName}
                 </NavLink>
               </li>
