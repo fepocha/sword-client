@@ -3,7 +3,7 @@ import { ThemeToggle } from '~/components/layout/ThemeToggle';
 
 export default function Layout() {
   return (
-    <div className="main-container">
+    <div className="root-container">
       <header className="flex border-b-[1px] justify-between items-center px-[20px]">
         <nav>
           <ul>
