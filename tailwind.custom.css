@@ -50,7 +50,7 @@
     @apply text-2xl mb-10
   }
   .main-section {
-    @apply max-w-page px-2 mx-auto pt-10
+    @apply max-w-page px-4 mx-auto pt-10
   }
 }
 @layer base {
