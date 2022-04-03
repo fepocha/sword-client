@@ -6,7 +6,7 @@ export default function Index() {
     <section className="main-container">
       <div className="flex flex-col justify-center items-center min-h-screen">
         <div className="py-10">
-          <TypewriterText type="h1" className="text-5xl">
+          <TypewriterText type="h1" className="text-2xl sm:text-4xl lg:text-5xl">
             Welcome to <span className="text-orange-light">Words-say</span>
           </TypewriterText>
         </div>
