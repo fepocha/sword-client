@@ -59,11 +59,13 @@ export default function NewWordFormPage() {
         name="nickname"
         value={nickname.value}
         onChange={handleInputChange}
+        className="bg-transparent border-[1px]"
       />
       <textarea
         name="description"
         value={description.value}
         onChange={handleInputChange}
+        className="bg-transparent border-[1px]"
       />
       <WordBlock characters={word.split('')} />
       {helperText && (
