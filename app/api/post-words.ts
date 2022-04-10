@@ -4,7 +4,7 @@ import { API_BASE_URL } from './index';
 interface PostWordsRequest {
   word: string; // 문제 단어
   createdBy: string; // 출제자 이름
-  description: string; // 출제자의 한마디
+  description?: string; // 출제자의 한마디
 }
 
 interface PostWordsResponse {
