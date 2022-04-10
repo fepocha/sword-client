@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 export default function Index() {
   return (
-    <section className="main-container">
+    <section className="root-container">
       <div className="flex flex-col justify-center items-center min-h-screen">
         <div className="py-10">
           <TypewriterText type="h1" className="text-2xl sm:text-4xl lg:text-5xl">

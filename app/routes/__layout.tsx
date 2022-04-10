@@ -1,45 +1,23 @@
-import { NavLink, Outlet } from 'remix';
+import { NavLink , Outlet } from 'remix';
+import { NavigationMenu } from '~/components/layout/NavigationMenu';
 import { ThemeToggle } from '~/components/layout/ThemeToggle';
 
 export default function Layout() {
   return (
-    <div className="main-container">
-      <header className="flex border-b-[1px] justify-between items-center px-[20px]">
-        <nav>
-          <ul>
-            <li>
-              <NavLink
-                to="/word/new"
-                prefetch="intent"
-                className={({ isActive }) => isActive ? 'active-menu' : ''}
-              >
-                Add a new word
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/word/random"
-                prefetch="intent"
-                className={({ isActive }) => isActive ? 'active-menu' : ''}
-              >
-                Play Games
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/tutorial"
-                prefetch="intent"
-                className={({ isActive }) => isActive ? 'active-menu' : ''}
-              >
-                Tutorial
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
-        <h1>Wordssay</h1>
+    <div className="root-container">
+      <header className="fixed top-0 left-0 w-full h-header-height flex border-b-[1px] border-gray-light justify-between items-center px-[20px] z-50">
+        <NavigationMenu />
+        <h1 className="text-md">
+          <NavLink
+            to="/word/random"
+            prefetch="intent"
+          >
+            Word&apos;s Say
+          </NavLink>
+        </h1>
         <ThemeToggle />
       </header>
-      <main>
+      <main className="pt-header-height">
         <Outlet />
       </main>
     </div>
