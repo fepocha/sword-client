@@ -24,7 +24,7 @@ function reducer(state: State, action: Action) {
   }
 }
 
-export function useWordType() {
+export function useWordForm() {
   const [{ word, helperText }, dispatch] = useReducer<Reducer<State, Action>>(reducer, { word: '' });
 
   const typeCharacter = (character: string) => {

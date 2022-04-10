@@ -3,12 +3,11 @@ import { postWords, POST_WORDS_API_PATH } from '~/api/post-words';
 import type { Key } from '~/components/word/Keyboard';
 import { Keyboard } from '~/components/word/Keyboard';
 import { WordBlock } from '~/components/word/WordBlock';
-import { useWordType } from '~/hooks/use-word-type';
+import { useWordForm } from '~/hooks/use-word-form';
 
 const HELPER_TEXT = {
   INVALID_LENGTH: 'A word should be 5 characters long',
 };
-
 
 const usePostWordsMutation = () => useMutation(POST_WORDS_API_PATH, postWords);
 
@@ -20,7 +19,7 @@ export default function NewWordFormPage() {
     deleteCharacter,
     showHelperText,
     clearHelperText,
-  } = useWordType();
+  } = useWordForm();
 
   const { mutate: mutateWords } = usePostWordsMutation();
 
