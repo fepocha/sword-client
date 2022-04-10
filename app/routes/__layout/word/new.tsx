@@ -3,11 +3,11 @@ import { postWords, POST_WORDS_API_PATH } from '~/api/post-words';
 import type { Key } from '~/components/word/Keyboard';
 import { Keyboard } from '~/components/word/Keyboard';
 import { WordBlock } from '~/components/word/WordBlock';
+import { useUserInfoForm } from '~/hooks/use-user-info-form';
 import { useWordForm } from '~/hooks/use-word-form';
+import { getMaxLimitHelperText } from '~/utils/helper-text';
 
-const HELPER_TEXT = {
-  INVALID_LENGTH: 'A word should be 5 characters long',
-};
+const WORD_MAX_LENGTH = 5;
 
 const usePostWordsMutation = () => useMutation(POST_WORDS_API_PATH, postWords);
 
@@ -21,6 +21,12 @@ export default function NewWordFormPage() {
     clearHelperText,
   } = useWordForm();
 
+  const {
+    nickname,
+    description,
+    handleInputChange
+  } = useUserInfoForm();
+
   const { mutate: mutateWords } = usePostWordsMutation();
 
   const handleKeyClick = ({ type, value }: Key) => {
@@ -33,8 +39,8 @@ export default function NewWordFormPage() {
       deleteCharacter();
       return;
     }
-    if (word.length < 5) {
-      showHelperText(HELPER_TEXT.INVALID_LENGTH);
+    if (word.length < WORD_MAX_LENGTH) {
+      showHelperText(getMaxLimitHelperText('word', WORD_MAX_LENGTH));
       return;
     }
 
@@ -49,6 +55,16 @@ export default function NewWordFormPage() {
   return (
     <section className="main-section">
       <h2 className="main-title">Add a new word.</h2>
+      <input
+        name="nickname"
+        value={nickname.value}
+        onChange={handleInputChange}
+      />
+      <textarea
+        name="description"
+        value={description.value}
+        onChange={handleInputChange}
+      />
       <WordBlock characters={word.split('')} />
       {helperText && (
         <p className="mt-6 text-center text-orange-light text-sm">{helperText}</p>

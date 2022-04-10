@@ -20,7 +20,7 @@ function reducer(state: State, action: Action) {
     case 'clearHelperText':
       return { ...state, helperText: '' };
     default:
-      throw new Error();
+      throw new Error(`action.type is invalid: ${action.type}`);
   }
 }
 
