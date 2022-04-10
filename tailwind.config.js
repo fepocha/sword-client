@@ -12,6 +12,20 @@ module.exports = {
       maxWidth: {
         page: '580px',
       },
+      keyframes: {
+        typing: {
+          '0%': { width: 0 },
+          '100%': { width: '100%' },
+        },
+        blinkCaret: {
+          '0%': { borderColor: 'transparent' },
+          '50%': { borderColor: 'rgb(var(--color-orange-dark) / var(--tw-bg-opacity))' },
+          '100%': { borderColor: 'transparent' },
+        },
+      },
+      animation: {
+        typing: 'typing 3s steps(44) 1 normal both, blinkCaret 0.75s steps(44) infinite normal',
+      },
     },
     screens: {
       sm: '480px',
@@ -22,4 +36,4 @@ module.exports = {
     colors,
   },
   plugins: [],
-}
+};
