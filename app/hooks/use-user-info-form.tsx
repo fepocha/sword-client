@@ -16,7 +16,6 @@ type State = Record<InputFieldName, {
   helperText?: string;
 }>;
 
-
 const NICKNAME_MIN_LENGTH = 2;
 const NICKNAME_MAX_LENGTH = 10;
 

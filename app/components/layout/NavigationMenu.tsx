@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import { NavLink  } from 'remix';
+import { NavLink } from 'remix';
 
 const NAVIGATION = [
   {
@@ -18,7 +18,7 @@ const NAVIGATION = [
 ];
 
 export function NavigationMenu() {
-  const [isExpanded, setExpanded] = useState(true);
+  const [isExpanded, setExpanded] = useState(false);
 
   const handleMenuToggle = () => {
     setExpanded(prevExpanded => !prevExpanded);
