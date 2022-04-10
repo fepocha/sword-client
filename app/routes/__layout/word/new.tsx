@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { postWords, POST_WORDS_API_PATH } from '~/api/post-words';
 import type { Key } from '~/components/word/Keyboard';
@@ -11,7 +13,7 @@ const WORD_MAX_LENGTH = 5;
 
 const usePostWordsMutation = () => useMutation(POST_WORDS_API_PATH, postWords);
 
-export default function NewWordFormPage() {
+function WordForm({ nickname, description }: { nickname: string; description?: string; }) {
   const {
     word,
     helperText,
@@ -20,12 +22,6 @@ export default function NewWordFormPage() {
     showHelperText,
     clearHelperText,
   } = useWordForm();
-
-  const {
-    nickname,
-    description,
-    handleInputChange
-  } = useUserInfoForm();
 
   const { mutate: mutateWords } = usePostWordsMutation();
 
@@ -46,53 +42,83 @@ export default function NewWordFormPage() {
 
     mutateWords({
       word,
-      // TODO: 로그인 기능 넣고 createdBy, description 추가
-      createdBy: '',
-      description: '',
+      createdBy: nickname,
+      description,
     });
   };
 
   return (
-    <section className="main-section">
-      <h2 className="main-title">Add a new word.</h2>
-      <form className="grid gap-6">
-        <div>
-          <label htmlFor="nickname">
-            <span className="input-label">Your Nickname</span>
-            <input
-              id="nickname"
-              name="nickname"
-              value={nickname.value}
-              onChange={handleInputChange}
-            />
-          </label>
-          {nickname.helperText && (
-            <div className="helper-text">{nickname.helperText}</div>
-          )}
-        </div>
-        <div>
-          <label htmlFor="description">
-            <span className="input-label">Single line comment (optional)</span>
-            <textarea
-              id="description"
-              name="description"
-              value={description.value}
-              onChange={handleInputChange}
-            />
-          </label>
-          {description.helperText && (
-            <div className="helper-text">{description.helperText}</div>
-          )}
-        </div>
-        <button type="button" className="button-lg mt-4">
-          Next
-        </button>
-      </form>
+    <>
       <WordBlock characters={word.split('')} />
       {helperText && (
         <div className="helper-text mt-6 text-center">{helperText}</div>
       )}
       <Keyboard onKeyClick={handleKeyClick} />
+    </>
+  );
+}
+
+export default function NewWordFormPage() {
+  const [currentActivePage, setCurrentActivePage] = useState<'userInfoForm' | 'wordForm'>('userInfoForm');
+
+  const {
+    nickname,
+    description,
+    handleInputChange
+  } = useUserInfoForm();
+
+  const handleNextButtonClick = () => {
+    if (nickname.value === '') return;
+
+    setCurrentActivePage('wordForm');
+  };
+
+  return (
+    <section className="main-section">
+      <h2 className="main-title">Add a new word.</h2>
+      {currentActivePage === 'wordForm' && (
+        <WordForm nickname={nickname.value} description={description.value} />
+      )}
+      {currentActivePage === 'userInfoForm' && (
+        <form className="grid gap-6">
+          <div>
+            <label htmlFor="nickname">
+              <span className="input-label">Your Nickname</span>
+              <input
+                id="nickname"
+                name="nickname"
+                value={nickname.value}
+                onChange={handleInputChange}
+              />
+            </label>
+            {nickname.helperText && (
+              <div className="helper-text">{nickname.helperText}</div>
+            )}
+          </div>
+          <div>
+            <label htmlFor="description">
+              <span className="input-label">Single line comment (optional)</span>
+              <textarea
+                id="description"
+                name="description"
+                value={description.value}
+                onChange={handleInputChange}
+              />
+            </label>
+            {description.helperText && (
+              <div className="helper-text">{description.helperText}</div>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={handleNextButtonClick}
+            className={classNames('button-lg mt-4', { 'bg-gray-light': nickname.value === '' })}
+            aria-disabled={nickname.value === ''}
+          >
+            Next
+          </button>
+        </form>
+      )}
     </section>
   );
 }
