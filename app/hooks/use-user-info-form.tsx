@@ -17,7 +17,7 @@ type State = Record<InputFieldName, {
 }>;
 
 const NICKNAME_MIN_LENGTH = 2;
-const NICKNAME_MAX_LENGTH = 10;
+const NICKNAME_MAX_LENGTH = 15;
 
 const DESCRIPTION_MAX_LENGTH = 50;
 
