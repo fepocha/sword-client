@@ -15,8 +15,10 @@ interface PostWordsResponse {
   id: string; // 아이디
 }
 
+export const POST_WORDS_API_PATH = `${API_BASE_URL}/words`;
+
 export const postWords = async (data: PostWordsRequest) => {
-  const response = await axios.post<PostWordsResponse>(`${API_BASE_URL}/words`, data);
+  const response = await axios.post<PostWordsResponse>(POST_WORDS_API_PATH, data);
 
   return response.data;
 };
