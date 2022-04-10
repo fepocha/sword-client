@@ -11,8 +11,6 @@ import { getMaxLimitHelperText } from '~/utils/helper-text';
 
 const WORD_MAX_LENGTH = 5;
 
-const usePostWordsMutation = () => useMutation(POST_WORDS_API_PATH, postWords);
-
 function WordForm({ nickname, description }: { nickname: string; description?: string; }) {
   const {
     word,
@@ -23,7 +21,17 @@ function WordForm({ nickname, description }: { nickname: string; description?: s
     clearHelperText,
   } = useWordForm();
 
-  const { mutate: mutateWords } = usePostWordsMutation();
+  const { mutate: mutateWords } = useMutation(POST_WORDS_API_PATH, postWords, {
+    onSuccess: () => {
+      // TODO: Dialog로 교체
+      alert('Success');
+    },
+    onError: (error) => {
+      // TODO: Dialog로 교체
+      console.log(error);
+      alert('Error');
+    },
+  });
 
   const handleKeyClick = ({ type, value }: Key) => {
     clearHelperText();
