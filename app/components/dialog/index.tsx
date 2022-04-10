@@ -21,7 +21,7 @@ export function Dialog({ children }: PropsWithChildren<unknown>) {
         <div className="w-full h-full bg-white-mid rounded-lg text-center px-6 py-8">
           {children}
           <footer className="mt-8">
-            <button type="button" className="bg-orange-dark px-6 py-2 rounded-md active:bg-opacity-80">Close</button>
+            <button type="button" className="button-sm">Close</button>
           </footer>
         </div>
       </div>

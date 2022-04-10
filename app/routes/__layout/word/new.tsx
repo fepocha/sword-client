@@ -55,21 +55,42 @@ export default function NewWordFormPage() {
   return (
     <section className="main-section">
       <h2 className="main-title">Add a new word.</h2>
-      <input
-        name="nickname"
-        value={nickname.value}
-        onChange={handleInputChange}
-        className="bg-transparent border-[1px]"
-      />
-      <textarea
-        name="description"
-        value={description.value}
-        onChange={handleInputChange}
-        className="bg-transparent border-[1px]"
-      />
+      <form className="grid gap-6">
+        <div>
+          <label htmlFor="nickname">
+            <span className="input-label">Your Nickname</span>
+            <input
+              id="nickname"
+              name="nickname"
+              value={nickname.value}
+              onChange={handleInputChange}
+            />
+          </label>
+          {nickname.helperText && (
+            <div className="helper-text">{nickname.helperText}</div>
+          )}
+        </div>
+        <div>
+          <label htmlFor="description">
+            <span className="input-label">Single line comment (optional)</span>
+            <textarea
+              id="description"
+              name="description"
+              value={description.value}
+              onChange={handleInputChange}
+            />
+          </label>
+          {description.helperText && (
+            <div className="helper-text">{description.helperText}</div>
+          )}
+        </div>
+        <button type="button" className="button-lg mt-4">
+          Next
+        </button>
+      </form>
       <WordBlock characters={word.split('')} />
       {helperText && (
-        <p className="mt-6 text-center text-orange-light text-sm">{helperText}</p>
+        <div className="helper-text mt-6 text-center">{helperText}</div>
       )}
       <Keyboard onKeyClick={handleKeyClick} />
     </section>

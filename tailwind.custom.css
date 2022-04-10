@@ -52,9 +52,24 @@
   .main-section {
     @apply max-w-page px-4 mx-auto pt-10
   }
+  .button-sm {
+    @apply bg-orange-dark px-6 py-2 rounded-md active:bg-opacity-80
+  }
+  .button-lg {
+    @apply bg-orange-dark w-full px-6 py-3 text-lg rounded-md active:bg-opacity-80
+  }
+  .input-label {
+    @apply text-sm text-gray-dark
+  }
+  .helper-text {
+    @apply mt-2 text-orange-light text-sm
+  }
 }
 @layer base {
   html {
     font-family: 'Special Elite', cursive;
+  }
+  input, textarea {
+    @apply w-full bg-transparent border-[1px] border-gray-dark caret-black-light px-2 py-2 rounded-md outline-blue-mid
   }
 }
