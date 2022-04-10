@@ -59,7 +59,7 @@ function reducer(state: State, action: Action) {
 }
 
 const DEFAULT_STATE: State = {
-  nickname: { value: '', helperText: '' },
+  nickname: { value: '', helperText: 'Nickname is a required field' },
   description: { value: '', helperText: '' },
 };
 
