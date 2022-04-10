@@ -24,7 +24,7 @@ module.exports = {
         },
       },
       animation: {
-        typing: 'typing 3s steps(44) 1s 1 normal both, blinkCaret 0.75s steps(44) infinite normal',
+        typing: 'typing 3s steps(44) 1 normal both, blinkCaret 0.75s steps(44) infinite normal',
       },
     },
     screens: {
