@@ -11,8 +11,6 @@ import { getMaxLimitHelperText } from '~/utils/helper-text';
 
 const WORD_MAX_LENGTH = 5;
 
-const usePostWordsMutation = () => useMutation(POST_WORDS_API_PATH, postWords);
-
 function WordForm({ nickname, description }: { nickname: string; description?: string; }) {
   const {
     word,
@@ -23,7 +21,17 @@ function WordForm({ nickname, description }: { nickname: string; description?: s
     clearHelperText,
   } = useWordForm();
 
-  const { mutate: mutateWords } = usePostWordsMutation();
+  const { mutate: mutateWords } = useMutation(POST_WORDS_API_PATH, postWords, {
+    onSuccess: () => {
+      // TODO: Dialog로 교체
+      alert('Success');
+    },
+    onError: (error) => {
+      // TODO: Dialog로 교체
+      console.log(error);
+      alert('Error');
+    },
+  });
 
   const handleKeyClick = ({ type, value }: Key) => {
     clearHelperText();
@@ -64,11 +72,12 @@ export default function NewWordFormPage() {
   const {
     nickname,
     description,
-    handleInputChange
+    handleInputChange,
+    isFormFieldValid,
   } = useUserInfoForm();
 
   const handleNextButtonClick = () => {
-    if (nickname.value === '') return;
+    if (!isFormFieldValid) return;
 
     setCurrentActivePage('wordForm');
   };
@@ -112,8 +121,8 @@ export default function NewWordFormPage() {
           <button
             type="button"
             onClick={handleNextButtonClick}
-            className={classNames('button-lg mt-4', { 'bg-gray-light': nickname.value === '' })}
-            aria-disabled={nickname.value === ''}
+            className={classNames('button-lg mt-4', { 'bg-gray-light': !isFormFieldValid })}
+            aria-disabled={!isFormFieldValid}
           >
             Next
           </button>

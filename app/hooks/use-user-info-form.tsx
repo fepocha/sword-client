@@ -76,8 +76,11 @@ export function useUserInfoForm() {
     });
   };
 
+  const isFormFieldValid = state.nickname.helperText === '' && state.description.helperText === '';
+
   return {
     ...state,
     handleInputChange,
+    isFormFieldValid,
   };
 }
