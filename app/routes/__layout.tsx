@@ -12,7 +12,7 @@ export default function Layout() {
             to="/word/random"
             prefetch="intent"
           >
-            Words&apos;say
+            Word&apos;s Say
           </NavLink>
         </h1>
         <ThemeToggle />
