@@ -13,7 +13,7 @@ export default function Index() {
         </div>
         <div className="py-3">
           <NavLink
-            to="/word/random"
+            to="/play"
             prefetch="intent"
             className={({ isActive }) => classNames({ 'active-menu': isActive })}
           >
