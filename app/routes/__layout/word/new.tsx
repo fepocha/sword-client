@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import { postWords, POST_WORDS_API_PATH } from '~/api/post-words';
+import { postWords, PostWordsErrorResponse, POST_WORDS_API_PATH } from '~/api/post-words';
 import type { Key } from '~/components/word/Keyboard';
 import { Keyboard } from '~/components/word/Keyboard';
 import { WordBlock } from '~/components/word/WordBlock';
@@ -17,19 +17,21 @@ function WordForm({ nickname, description }: { nickname: string; description?: s
     helperText,
     typeCharacter,
     deleteCharacter,
+    clearWord,
     showHelperText,
     clearHelperText,
   } = useWordForm();
 
   const { mutate: mutateWords } = useMutation(POST_WORDS_API_PATH, postWords, {
-    onSuccess: () => {
+    onSuccess: (response) => {
       // TODO: Dialog로 교체
-      alert('Success');
+      alert(`${response.word} is successfully added`);
+      clearWord();
     },
-    onError: (error) => {
+    onError: (error: PostWordsErrorResponse) => {
       // TODO: Dialog로 교체
-      console.log(error);
-      alert('Error');
+      alert(error?.response?.data.message);
+      clearWord();
     },
   });
 
