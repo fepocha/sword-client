@@ -20,11 +20,11 @@ function reducer(state: State, action: Action) {
     case 'clearHelperText':
       return { ...state, helperText: '' };
     default:
-      throw new Error();
+      throw new Error(`action.type is invalid: ${action.type}`);
   }
 }
 
-export function useWordType() {
+export function useWordForm() {
   const [{ word, helperText }, dispatch] = useReducer<Reducer<State, Action>>(reducer, { word: '' });
 
   const typeCharacter = (character: string) => {

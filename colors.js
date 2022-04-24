@@ -31,4 +31,5 @@ module.exports = {
     blue: {
       mid: withOpacityValue('--color-blue-mid'),
     },
+    dim: 'rgba(0, 0, 0, 0.6)',
 }

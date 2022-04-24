@@ -1,13 +1,17 @@
+import classNames from 'classnames';
+import { useState } from 'react';
+import { useMutation } from 'react-query';
+import { postWords, POST_WORDS_API_PATH } from '~/api/post-words';
 import type { Key } from '~/components/word/Keyboard';
 import { Keyboard } from '~/components/word/Keyboard';
 import { WordBlock } from '~/components/word/WordBlock';
-import { useWordType } from '~/hooks/use-word-type';
+import { useUserInfoForm } from '~/hooks/use-user-info-form';
+import { useWordForm } from '~/hooks/use-word-form';
+import { getMaxLimitHelperText } from '~/utils/helper-text';
 
-const HELPER_TEXT = {
-  INVALID_LENGTH: 'A word should be 5 characters long',
-};
+const WORD_MAX_LENGTH = 5;
 
-export default function NewWordFormPage() {
+function WordForm({ nickname, description }: { nickname: string; description?: string; }) {
   const {
     word,
     helperText,
@@ -15,7 +19,19 @@ export default function NewWordFormPage() {
     deleteCharacter,
     showHelperText,
     clearHelperText,
-  } = useWordType();
+  } = useWordForm();
+
+  const { mutate: mutateWords } = useMutation(POST_WORDS_API_PATH, postWords, {
+    onSuccess: () => {
+      // TODO: Dialog로 교체
+      alert('Success');
+    },
+    onError: (error) => {
+      // TODO: Dialog로 교체
+      console.log(error);
+      alert('Error');
+    },
+  });
 
   const handleKeyClick = ({ type, value }: Key) => {
     clearHelperText();
@@ -27,20 +43,91 @@ export default function NewWordFormPage() {
       deleteCharacter();
       return;
     }
-    if (word.length < 5) {
-      showHelperText(HELPER_TEXT.INVALID_LENGTH);
+    if (word.length < WORD_MAX_LENGTH) {
+      showHelperText(getMaxLimitHelperText('word', WORD_MAX_LENGTH));
+      return;
     }
-    // submit event
+
+    mutateWords({
+      word,
+      createdBy: nickname,
+      description,
+    });
+  };
+
+  return (
+    <>
+      <WordBlock characters={word.split('')} />
+      {helperText && (
+        <div className="helper-text mt-6 text-center">{helperText}</div>
+      )}
+      <Keyboard onKeyClick={handleKeyClick} />
+    </>
+  );
+}
+
+export default function NewWordFormPage() {
+  const [currentActivePage, setCurrentActivePage] = useState<'userInfoForm' | 'wordForm'>('userInfoForm');
+
+  const {
+    nickname,
+    description,
+    handleInputChange,
+    isFormFieldValid,
+  } = useUserInfoForm();
+
+  const handleNextButtonClick = () => {
+    if (!isFormFieldValid) return;
+
+    setCurrentActivePage('wordForm');
   };
 
   return (
     <section className="main-section">
       <h2 className="main-title">Add a new word.</h2>
-      <WordBlock characters={word.split('')} />
-      {helperText && (
-        <p className="mt-6 text-center text-orange-light text-sm">{helperText}</p>
+      {currentActivePage === 'wordForm' && (
+        <WordForm nickname={nickname.value} description={description.value} />
       )}
-      <Keyboard onKeyClick={handleKeyClick} />
+      {currentActivePage === 'userInfoForm' && (
+        <form className="grid gap-6">
+          <div>
+            <label htmlFor="nickname">
+              <span className="input-label">Your Nickname</span>
+              <input
+                id="nickname"
+                name="nickname"
+                value={nickname.value}
+                onChange={handleInputChange}
+              />
+            </label>
+            {nickname.helperText && (
+              <div className="helper-text">{nickname.helperText}</div>
+            )}
+          </div>
+          <div>
+            <label htmlFor="description">
+              <span className="input-label">Single line comment (optional)</span>
+              <textarea
+                id="description"
+                name="description"
+                value={description.value}
+                onChange={handleInputChange}
+              />
+            </label>
+            {description.helperText && (
+              <div className="helper-text">{description.helperText}</div>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={handleNextButtonClick}
+            className={classNames('button-lg mt-4', { 'bg-gray-light': !isFormFieldValid })}
+            aria-disabled={!isFormFieldValid}
+          >
+            Next
+          </button>
+        </form>
+      )}
     </section>
   );
 }
