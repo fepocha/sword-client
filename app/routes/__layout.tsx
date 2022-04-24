@@ -1,6 +1,7 @@
 import { NavLink , Outlet } from 'remix';
 import { NavigationMenu } from '~/components/layout/NavigationMenu';
 import { ThemeToggle } from '~/components/layout/ThemeToggle';
+import { DialogProvider } from '~/context/dialog';
 
 export default function Layout() {
   return (
@@ -18,7 +19,9 @@ export default function Layout() {
         <ThemeToggle />
       </header>
       <main className="pt-header-height">
-        <Outlet />
+        <DialogProvider>
+          <Outlet />
+        </DialogProvider>
       </main>
     </div>
   );
