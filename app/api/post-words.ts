@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getApiBaseUrl } from './index';
 
 interface PostWordsRequest {
   word: string; // 문제 단어
@@ -14,7 +15,7 @@ interface PostWordsResponse {
   id: string; // 아이디
 }
 
-export const POST_WORDS_API_PATH = `${process.env.API_BASE_URL}/words`;
+export const POST_WORDS_API_PATH = `${getApiBaseUrl()}/words`;
 
 export const postWords = async (data: PostWordsRequest) => {
   const response = await axios.post<PostWordsResponse>(POST_WORDS_API_PATH, data);
