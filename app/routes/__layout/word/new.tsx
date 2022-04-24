@@ -5,6 +5,7 @@ import { postWords, PostWordsErrorResponse, POST_WORDS_API_PATH } from '~/api/po
 import type { Key } from '~/components/word/Keyboard';
 import { Keyboard } from '~/components/word/Keyboard';
 import { WordBlock } from '~/components/word/WordBlock';
+import { useDialogContext } from '~/context/dialog';
 import { useUserInfoForm } from '~/hooks/use-user-info-form';
 import { useWordForm } from '~/hooks/use-word-form';
 import { getMaxLimitHelperText } from '~/utils/helper-text';
@@ -22,16 +23,27 @@ function WordForm({ nickname, description }: { nickname: string; description?: s
     clearHelperText,
   } = useWordForm();
 
+  const { openDialog } = useDialogContext();
   const { mutate: mutateWords } = useMutation(POST_WORDS_API_PATH, postWords, {
     onSuccess: (response) => {
-      // TODO: Dialog로 교체
-      alert(`${response.word} is successfully added`);
-      clearWord();
+      openDialog({
+        title: 'Thank you!',
+        description: `${response.word} is successfully added`,
+        onClick: () => clearWord(),
+      });
     },
     onError: (error: PostWordsErrorResponse) => {
-      // TODO: Dialog로 교체
-      alert(error?.response?.data.message);
-      clearWord();
+      if (error.response?.status === 400) {
+        openDialog({
+          title: 'Error',
+          description: error?.response?.data.message,
+          onClick: () => clearWord(),
+        });
+      } else {
+        openDialog({
+          onClick: () => clearWord(),
+        });
+      }
     },
   });
 
