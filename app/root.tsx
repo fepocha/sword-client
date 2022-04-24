@@ -17,6 +17,7 @@ import { Theme, ThemeProvider, useThemeContext } from './context/theme';
 
 type LoaderData = {
   theme: Theme;
+  ENV: Record<string, string | undefined>;
 };
 
 const queryClient = new QueryClient();
@@ -28,17 +29,15 @@ export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Special+Elite&display=swap' }
 ];
-/**
- *
- * <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
- */
+
 export const loader: LoaderFunction = async ({ request }) => {
   const themeSession = await getThemeSession(request);
 
   const data: LoaderData = {
     theme: themeSession.getTheme(),
+    ENV: {
+      API_BASE_URL: process.env.API_BASE_URL,
+    }
   };
 
   return data;
@@ -46,6 +45,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 function App() {
   const { theme } = useThemeContext();
+  const { ENV } = useLoaderData();
 
   return (
     <html lang="ko" className={clsx(theme)}>
@@ -61,6 +61,8 @@ function App() {
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
         <ScrollRestoration />
+        {/* eslint-disable-next-line react/no-danger */}
+        <script dangerouslySetInnerHTML={{ __html: `window.ENV = ${JSON.stringify(ENV)}` }} />
         <Scripts />
         <LiveReload />
       </body>
