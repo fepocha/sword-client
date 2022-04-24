@@ -1,6 +1,5 @@
-import { useState, createContext, useContext, useRef, useEffect } from 'react';
+import { useState, createContext, useContext, useRef, useEffect, PropsWithChildren } from 'react';
 import { useFetcher } from 'remix';
-import { WithChildren } from '~/types';
 
 enum Theme {
   DARK = 'dark',
@@ -57,7 +56,7 @@ const useTheme = ({ ssrTheme }: SsrThemeProps): ThemeContextType => {
 
 const ThemeContext = createContext<null | ThemeContextType>(null);
 
-function ThemeProvider({ children, ssrTheme }: WithChildren<SsrThemeProps>) {
+function ThemeProvider({ children, ssrTheme }: PropsWithChildren<SsrThemeProps>) {
   const themeContextValue = useTheme({ ssrTheme });
 
   return (
