@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { getApiBaseUrl } from './index';
 
 interface PostWordsRequest {
@@ -14,6 +14,11 @@ interface PostWordsResponse {
   createdAt: Date; // 생성일자
   id: string; // 아이디
 }
+
+interface ErrorData {
+  message?: string;
+}
+export type PostWordsErrorResponse = AxiosError<ErrorData>;
 
 export const POST_WORDS_API_PATH = `${getApiBaseUrl()}/words`;
 
