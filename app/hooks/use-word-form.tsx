@@ -1,7 +1,7 @@
 import { Reducer, useReducer } from 'react';
 
 interface Action {
-  type: 'typeCharacter' | 'deleteCharacter' | 'showHelperText' | 'clearHelperText';
+  type: 'typeCharacter' | 'deleteCharacter' | 'showHelperText' | 'clearHelperText' | 'clearWord';
   payload?: string;
 }
 interface State {
@@ -19,6 +19,8 @@ function reducer(state: State, action: Action) {
       return { ...state, helperText: action.payload };
     case 'clearHelperText':
       return { ...state, helperText: '' };
+    case 'clearWord':
+      return { ...state, helperText: '', word: '' };
     default:
       throw new Error(`action.type is invalid: ${action.type}`);
   }
@@ -33,6 +35,8 @@ export function useWordForm() {
   const deleteCharacter = () => {
     if (word.length > 0) dispatch({ type: 'deleteCharacter' });
   };
+  const clearWord = () => dispatch({ type: 'clearWord' });
+
   const clearHelperText = () => dispatch({ type: 'clearHelperText' });
   const showHelperText = (text: string) => dispatch({ type: 'showHelperText', payload: text });
 
@@ -42,6 +46,7 @@ export function useWordForm() {
     helperText,
     typeCharacter,
     deleteCharacter,
+    clearWord,
     clearHelperText,
     showHelperText,
   };
