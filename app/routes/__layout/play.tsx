@@ -19,7 +19,7 @@ function Play() {
     updateAnswerMatrix,
     deleteCharacter,
     typeCharacter,
-    clearCharacters,
+    clearWord,
   } = useAnswerForm();
 
   const { data } = useQuery<IFetchRandomWordResponse>(FETCH_RANDOM_WORDS_API_PATH, async () => {
@@ -58,7 +58,7 @@ function Play() {
 
         answerService.setCurrentAnswer(answerRes);
         updateAnswerMatrix(answerRes.answerMatrix);
-        clearCharacters();
+        clearWord();
         moveNextAnswer();
       }
     } catch (e) {

@@ -1,12 +1,7 @@
 import { Reducer, useReducer } from 'react';
 
 interface Action {
-  type:
-    | 'typeCharacter'
-    | 'deleteCharacter'
-    | 'showHelperText'
-    | 'clearHelperText'
-    | 'clearCharacters';
+  type: 'typeCharacter' | 'deleteCharacter' | 'showHelperText' | 'clearHelperText' | 'clearWord';
   payload?: string;
 }
 interface State {
@@ -20,12 +15,12 @@ function reducer(state: State, action: Action) {
       return { ...state, word: state.word + action.payload };
     case 'deleteCharacter':
       return { ...state, word: state.word.slice(0, -1) };
-    case 'clearCharacters':
-      return { ...state, word: '' };
     case 'showHelperText':
       return { ...state, helperText: action.payload };
     case 'clearHelperText':
       return { ...state, helperText: '' };
+    case 'clearWord':
+      return { ...state, helperText: '', word: '' };
     default:
       throw new Error(`action.type is invalid: ${action.type}`);
   }
@@ -42,9 +37,9 @@ export function useWordForm() {
   const deleteCharacter = () => {
     if (word.length > 0) dispatch({ type: 'deleteCharacter' });
   };
-  const clearCharacters = () => {
-    dispatch({ type: 'clearCharacters' });
-  };
+
+  const clearWord = () => dispatch({ type: 'clearWord' });
+
   const clearHelperText = () => dispatch({ type: 'clearHelperText' });
   const showHelperText = (text: string) => dispatch({ type: 'showHelperText', payload: text });
 
@@ -53,8 +48,8 @@ export function useWordForm() {
     helperText,
     typeCharacter,
     deleteCharacter,
+    clearWord,
     clearHelperText,
     showHelperText,
-    clearCharacters,
   };
 }

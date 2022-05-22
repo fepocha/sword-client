@@ -1,28 +1,48 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import { postWords, POST_WORDS_API_PATH } from '~/api/post-words';
+import { postWords, PostWordsErrorResponse, POST_WORDS_API_PATH } from '~/api/post-words';
 import type { Key } from '~/components/word/Keyboard';
 import { Keyboard } from '~/components/word/Keyboard';
 import { WordBlock } from '~/components/word/WordBlock';
+import { useDialogContext } from '~/context/dialog';
 import { useUserInfoForm } from '~/hooks/use-user-info-form';
 import { useWordForm } from '~/hooks/use-word-form';
 import { getMaxLimitHelperText } from '~/utils/helper-text';
 import wordsService from '~/sevice/WordsService';
 
 function WordForm({ nickname, description }: { nickname: string; description?: string }) {
-  const { word, helperText, typeCharacter, deleteCharacter, showHelperText, clearHelperText } =
-    useWordForm();
+  const {
+    word,
+    helperText,
+    typeCharacter,
+    deleteCharacter,
+    clearWord,
+    showHelperText,
+    clearHelperText,
+  } = useWordForm();
 
+  const { openDialog } = useDialogContext();
   const { mutate: mutateWords } = useMutation(POST_WORDS_API_PATH, postWords, {
-    onSuccess: () => {
-      // TODO: Dialog로 교체
-      alert('Success');
+    onSuccess: response => {
+      openDialog({
+        title: 'Thank you!',
+        description: `${response.word} is successfully added`,
+        onClick: () => clearWord(),
+      });
     },
-    onError: error => {
-      // TODO: Dialog로 교체
-      console.log(error);
-      alert('Error');
+    onError: (error: PostWordsErrorResponse) => {
+      if (error.response?.status === 400) {
+        openDialog({
+          title: 'Error',
+          description: error?.response?.data.message,
+          onClick: () => clearWord(),
+        });
+      } else {
+        openDialog({
+          onClick: () => clearWord(),
+        });
+      }
     },
   });
 

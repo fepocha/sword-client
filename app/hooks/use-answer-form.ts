@@ -7,7 +7,7 @@ import wordsService from '~/sevice/WordsService';
 export const useAnswerForm = () => {
   const [answers, setAnswers] = useState<string[]>([]);
   const [answerMatrix, setAnswerMatrix] = useState<AnswerType[][]>([]);
-  const { word, helperText, typeCharacter, deleteCharacter, clearCharacters } = useWordForm();
+  const { word, helperText, typeCharacter, deleteCharacter, clearWord } = useWordForm();
 
   const updateAnswerMatrix = (matrix: AnswerType[][]) => {
     setAnswerMatrix(matrix);
@@ -51,6 +51,6 @@ export const useAnswerForm = () => {
     helperText,
     typeCharacter,
     deleteCharacter,
-    clearCharacters,
+    clearWord,
   };
 };
