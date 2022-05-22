@@ -8,25 +8,18 @@ import { WordBlock } from '~/components/word/WordBlock';
 import { useUserInfoForm } from '~/hooks/use-user-info-form';
 import { useWordForm } from '~/hooks/use-word-form';
 import { getMaxLimitHelperText } from '~/utils/helper-text';
+import wordsService from '~/sevice/WordsService';
 
-const WORD_MAX_LENGTH = 5;
-
-function WordForm({ nickname, description }: { nickname: string; description?: string; }) {
-  const {
-    word,
-    helperText,
-    typeCharacter,
-    deleteCharacter,
-    showHelperText,
-    clearHelperText,
-  } = useWordForm();
+function WordForm({ nickname, description }: { nickname: string; description?: string }) {
+  const { word, helperText, typeCharacter, deleteCharacter, showHelperText, clearHelperText } =
+    useWordForm();
 
   const { mutate: mutateWords } = useMutation(POST_WORDS_API_PATH, postWords, {
     onSuccess: () => {
       // TODO: Dialog로 교체
       alert('Success');
     },
-    onError: (error) => {
+    onError: error => {
       // TODO: Dialog로 교체
       console.log(error);
       alert('Error');
@@ -43,8 +36,8 @@ function WordForm({ nickname, description }: { nickname: string; description?: s
       deleteCharacter();
       return;
     }
-    if (word.length < WORD_MAX_LENGTH) {
-      showHelperText(getMaxLimitHelperText('word', WORD_MAX_LENGTH));
+    if (word.length < wordsService.WORD_MAX_LENGTH) {
+      showHelperText(getMaxLimitHelperText('word', wordsService.WORD_MAX_LENGTH));
       return;
     }
 
@@ -58,23 +51,18 @@ function WordForm({ nickname, description }: { nickname: string; description?: s
   return (
     <>
       <WordBlock characters={word.split('')} />
-      {helperText && (
-        <div className="helper-text mt-6 text-center">{helperText}</div>
-      )}
+      {helperText && <div className="helper-text mt-6 text-center">{helperText}</div>}
       <Keyboard onKeyClick={handleKeyClick} />
     </>
   );
 }
 
 export default function NewWordFormPage() {
-  const [currentActivePage, setCurrentActivePage] = useState<'userInfoForm' | 'wordForm'>('userInfoForm');
+  const [currentActivePage, setCurrentActivePage] = useState<'userInfoForm' | 'wordForm'>(
+    'userInfoForm'
+  );
 
-  const {
-    nickname,
-    description,
-    handleInputChange,
-    isFormFieldValid,
-  } = useUserInfoForm();
+  const { nickname, description, handleInputChange, isFormFieldValid } = useUserInfoForm();
 
   const handleNextButtonClick = () => {
     if (!isFormFieldValid) return;
@@ -100,9 +88,7 @@ export default function NewWordFormPage() {
                 onChange={handleInputChange}
               />
             </label>
-            {nickname.helperText && (
-              <div className="helper-text">{nickname.helperText}</div>
-            )}
+            {nickname.helperText && <div className="helper-text">{nickname.helperText}</div>}
           </div>
           <div>
             <label htmlFor="description">
@@ -114,9 +100,7 @@ export default function NewWordFormPage() {
                 onChange={handleInputChange}
               />
             </label>
-            {description.helperText && (
-              <div className="helper-text">{description.helperText}</div>
-            )}
+            {description.helperText && <div className="helper-text">{description.helperText}</div>}
           </div>
           <button
             type="button"

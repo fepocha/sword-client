@@ -10,6 +10,8 @@ class WordsService {
 
   solvedWordsStorage = LocalStorage<string[]>(this.SOLVED_WORDS_KEY);
 
+  WORD_MAX_LENGTH = 5;
+
   getRandomWord() {
     return this.randomWordStorage.get();
   }
