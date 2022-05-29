@@ -27,7 +27,9 @@ function reducer(state: State, action: Action) {
 }
 
 export function useWordForm() {
-  const [{ word, helperText }, dispatch] = useReducer<Reducer<State, Action>>(reducer, { word: '' });
+  const [{ word, helperText }, dispatch] = useReducer<Reducer<State, Action>>(reducer, {
+    word: '',
+  });
 
   const typeCharacter = (character: string) => {
     if (word.length < 5) dispatch({ type: 'typeCharacter', payload: character });
@@ -35,11 +37,11 @@ export function useWordForm() {
   const deleteCharacter = () => {
     if (word.length > 0) dispatch({ type: 'deleteCharacter' });
   };
+
   const clearWord = () => dispatch({ type: 'clearWord' });
 
   const clearHelperText = () => dispatch({ type: 'clearHelperText' });
   const showHelperText = (text: string) => dispatch({ type: 'showHelperText', payload: text });
-
 
   return {
     word,

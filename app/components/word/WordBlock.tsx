@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-type CharacterType = '' | '0' | '1' | '2';
+export type CharacterType = '' | '0' | '1' | '2';
 interface Props {
   characters: string[];
   boardStatus?: CharacterType[];
@@ -18,7 +18,7 @@ export function WordBlock({ characters = [], boardStatus = ['', '', '', '', ''] 
               'bg-gray-light': boardStatus[idx] === '0',
               'bg-orange-dark': boardStatus[idx] === '1',
               'bg-blue-mid': boardStatus[idx] === '2',
-            },
+            }
           )}
         >
           {characters[idx]}

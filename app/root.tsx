@@ -1,12 +1,4 @@
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData
-} from 'remix';
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'remix';
 import type { MetaFunction, LinksFunction, LoaderFunction } from 'remix';
 import clsx from 'clsx';
 import { getThemeSession } from '~/sessions/theme.server';
@@ -27,7 +19,10 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
-  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Special+Elite&display=swap' }
+  {
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Special+Elite&display=swap',
+  },
 ];
 
 export const loader: LoaderFunction = async ({ request }) => {
