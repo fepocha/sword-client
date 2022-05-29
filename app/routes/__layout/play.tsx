@@ -9,7 +9,8 @@ import { WordBlock } from '~/components/word/WordBlock';
 import { Key, Keyboard } from '~/components/word/Keyboard';
 import { UPDATE_ANSWERS_API_PATH, updateAnswer } from '~/api/update-answer';
 import { useAnswerForm } from '~/hooks/use-answer-form';
-import answerService from '~/sevice/AnswerService';
+import AnswerService from '~/sevice/AnswerService';
+import { useDialogContext } from '~/context/dialog';
 
 function Play() {
   const {
@@ -22,22 +23,27 @@ function Play() {
     clearWord,
   } = useAnswerForm();
 
-  const { data } = useQuery<IFetchRandomWordResponse>(FETCH_RANDOM_WORDS_API_PATH, async () => {
-    const recentWord = WordsService.getRandomWord();
-    if (recentWord) {
-      return recentWord;
+  const { data, refetch } = useQuery<IFetchRandomWordResponse>(
+    FETCH_RANDOM_WORDS_API_PATH,
+    async () => {
+      const recentWord = WordsService.getRandomWord();
+      if (recentWord) {
+        return recentWord;
+      }
+      const res = await fetchRandomWord({ excludedWords: WordsService.getSolvedWords() });
+
+      WordsService.setRandomWord(res);
+
+      return res;
     }
-    const res = await fetchRandomWord({ excludedWords: WordsService.getSolvedWords() });
-
-    WordsService.setRandomWord(res);
-
-    return res;
-  });
+  );
 
   const { mutateAsync } = useMutation(
     UPDATE_ANSWERS_API_PATH(data?.id || '', data?.answerId || ''),
     updateAnswer
   );
+
+  const { openDialog } = useDialogContext();
 
   const handleKeyClick = async ({ type, value }: Key) => {
     try {
@@ -56,15 +62,37 @@ function Play() {
           answer: answers.slice(-1)[0],
         });
 
-        answerService.setCurrentAnswer(answerRes);
+        updateAnswerMatrix(answerRes.answerMatrix);
+
+        if (answerRes.isSolved) {
+          openDialog({
+            title: "That's right.",
+            description: "Let's move on to the next word",
+            onClick: () => {
+              WordsService.addSolvedWords(answerRes.wordId);
+              WordsService.clearRandomWord();
+              AnswerService.clearCurrentAnswer();
+              updateAnswerMatrix([]);
+              clearWord();
+              refetch();
+            },
+            buttonText: 'Next =>',
+          });
+
+          return;
+        }
+
+        AnswerService.setCurrentAnswer(answerRes);
         updateAnswerMatrix(answerRes.answerMatrix);
         clearWord();
         moveNextAnswer();
       }
-    } catch (e) {
-      /**
-       * TODO: error handling
-       */
+    } catch (e: any) {
+      openDialog({
+        title: 'Warning!',
+        description: e?.response?.data?.message || 'Something is wrong.',
+        buttonText: 'Close',
+      });
     }
   };
 

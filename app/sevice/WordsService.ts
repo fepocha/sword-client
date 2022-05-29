@@ -20,6 +20,10 @@ class WordsService {
     this.randomWordStorage.set(value);
   }
 
+  clearRandomWord() {
+    this.randomWordStorage.remove();
+  }
+
   getSolvedWords() {
     return this.solvedWordsStorage.get() || [];
   }

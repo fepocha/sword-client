@@ -1,9 +1,9 @@
 import classNames from 'classnames';
+import { AnswerType } from '~/api/update-answer';
 
-export type CharacterType = '' | '0' | '1' | '2';
 interface Props {
   characters: string[];
-  boardStatus?: CharacterType[];
+  boardStatus?: AnswerType[];
 }
 
 export function WordBlock({ characters = [], boardStatus = ['', '', '', '', ''] }: Props) {

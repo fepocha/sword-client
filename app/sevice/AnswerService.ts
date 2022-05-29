@@ -13,6 +13,10 @@ class AnswerService {
   setCurrentAnswer(value: IUpdateAnswerResponse) {
     this.answerStorage.set(value);
   }
+
+  clearCurrentAnswer() {
+    this.answerStorage.remove();
+  }
 }
 
 export default new AnswerService();
