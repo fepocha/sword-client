@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { AnswerType } from '~/api';
 import { useWordForm } from '~/hooks/use-word-form';
 import answerService from '~/sevice/AnswerService';
-import { AnswerType } from '~/api/update-answer';
 import wordsService from '~/sevice/WordsService';
 
 export const useAnswerForm = () => {
