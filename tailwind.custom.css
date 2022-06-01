@@ -49,6 +49,9 @@
   .main-title {
     @apply text-2xl mb-10
   }
+  .sub-title {
+    @apply text-xl mb-6
+  }
   .main-section {
     @apply max-w-page px-4 mx-auto pt-10
   }
@@ -71,5 +74,14 @@
   }
   input, textarea {
     @apply w-full bg-transparent border-[1px] border-gray-dark caret-black-light px-2 py-2 rounded-md outline-blue-mid
+  }
+  dl {
+    @apply grid grid-cols-[140px_1fr] gap-2 items-center
+  }
+  dd {
+    @apply items-center
+  }
+  dt {
+    @apply text-gray-mid text-sm
   }
 }
