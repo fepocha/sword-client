@@ -10,7 +10,7 @@ export default function Layout() {
         <NavigationMenu />
         <h1 className="text-md">
           <NavLink
-            to="/word/random"
+            to="/play"
             prefetch="intent"
           >
             Word&apos;s Say
