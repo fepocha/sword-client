@@ -70,7 +70,7 @@ function Result() {
           <dd>{statistics.lose}</dd>
 
           <dt>Winning Rate.</dt>
-          <dd>{statistics.winningRate}</dd>
+          <dd>{statistics.winningRate}%</dd>
         </dl>
 
         <Title type="h2">Answers</Title>
