@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { HTMLAttributes, PropsWithChildren } from 'react';
 
 interface TitleProps extends HTMLAttributes<HTMLElement> {
-  type: 'h1' | 'h2';
+  type?: 'h1' | 'h2';
 }
 
 function Title({
