@@ -34,6 +34,7 @@ function Result() {
   const [searchParams] = useSearchParams();
   const wordId = searchParams.get('wordId');
 
+  // TODO: Global Error handling
   if (wordId === null) throw new Error('wordId is not exist');
 
   const { data } = useQuery(FETCH_WORD_RESULTS_API_PATH(wordId), () => fetchWordResults(wordId));
