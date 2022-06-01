@@ -10,6 +10,7 @@ import { Key, Keyboard } from '~/components/word/Keyboard';
 import { UPDATE_ANSWERS_API_PATH, updateAnswer } from '~/api/update-answer';
 import { useAnswerForm } from '~/hooks/use-answer-form';
 import answerService from '~/sevice/AnswerService';
+import Title from '~/components/Text/Title';
 
 function Play() {
   const {
@@ -70,7 +71,7 @@ function Play() {
 
   return (
     <section className="main-section">
-      <h2 className="main-title">Play Game! by {data?.createdBy}</h2>
+      <Title>Play Game! by {data?.createdBy}</Title>
 
       {answers.map((answer, i) => (
         <div className="mb-5" key={i}>

@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { useSearchParams  } from 'remix';
 import { AnswerType } from '~/api';
 import { fetchWordResults, FETCH_WORD_RESULTS_API_PATH } from '~/api/fetch-word-results';
+import Title from '~/components/Text/Title';
 import TypewriterText from '~/components/Text/TypewriterText';
 
 function AnswerMatrix({ answerMatrix }: {answerMatrix: AnswerType[][]}) {
@@ -42,10 +43,10 @@ function Result() {
 
     return (
       <section className="main-section">
-        <h2 className="main-title">
+        <Title>
           Answer is
           <TypewriterText type="span" className="flex ml-2 text-blue-mid">{word.word}</TypewriterText>
-        </h2>
+        </Title>
 
         <dl className="mb-8">
           <dt>Created By.</dt>
@@ -72,7 +73,7 @@ function Result() {
           <dd>{statistics.winningRate}</dd>
         </dl>
 
-        <h3 className="sub-title">Answers</h3>
+        <Title type="h2">Answers</Title>
         <ul className="flex flex-wrap flex-row gap-9">
           {solvedAnswers.map(answer => (
             <li key={answer.id}>
