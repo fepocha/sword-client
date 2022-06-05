@@ -1,7 +1,9 @@
+import Title from '~/components/Text/Title';
+
 export default function TutorialPage() {
   return (
     <section>
-      <h2>Tutorial</h2>
+      <Title>Tutorial</Title>
     </section>
   );
 }

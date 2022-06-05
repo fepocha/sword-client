@@ -10,6 +10,7 @@ import { useUserInfoForm } from '~/hooks/use-user-info-form';
 import { useWordForm } from '~/hooks/use-word-form';
 import { getMaxLimitHelperText } from '~/utils/helper-text';
 import wordsService from '~/sevice/WordsService';
+import Title from '~/components/Text/Title';
 
 function WordForm({ nickname, description }: { nickname: string; description?: string }) {
   const {
@@ -92,7 +93,7 @@ export default function NewWordFormPage() {
 
   return (
     <section className="main-section">
-      <h2 className="main-title">Add a new word.</h2>
+      <Title>Add a new word.</Title>
       {currentActivePage === 'wordForm' && (
         <WordForm nickname={nickname.value} description={description.value} />
       )}
