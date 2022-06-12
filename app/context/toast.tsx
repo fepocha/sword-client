@@ -11,18 +11,18 @@ interface ToastContextType {
 
 const ToastContext = createContext<null | ToastContextType>(null);
 
-const DEFAULT_TOAST_OPTION: ToastProps = {
+const DEFAULT_TOAST_OPTION: ToastOption = {
   text: '',
 };
 const DEFAULT_TOAST_DURATION = 2000;
 
 function ToastProvider({ children }: PropsWithChildren<unknown>) {
   const [isOpen, setIsOpen] = useState(false);
-  const [options, setOptions] = useState<ToastProps>(DEFAULT_TOAST_OPTION);
+  const [options, setOptions] = useState<ToastOption>(DEFAULT_TOAST_OPTION);
   const timeoutIdRef = useRef<NodeJS.Timeout | undefined>();
 
   const openToast = useCallback((toastOptions: ToastOption) => {
-    setOptions((prevOptions: ToastProps) => ({
+    setOptions((prevOptions: ToastOption) => ({
       ...prevOptions,
       ...toastOptions,
     }));
@@ -51,6 +51,7 @@ function ToastProvider({ children }: PropsWithChildren<unknown>) {
       <Toast
         {...options}
         isOpen={isOpen}
+        closeToast={closeToast}
       />
       {children}
     </ToastContext.Provider>
