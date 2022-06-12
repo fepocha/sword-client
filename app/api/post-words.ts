@@ -15,11 +15,6 @@ interface PostWordsResponse {
   id: string; // 아이디
 }
 
-interface ErrorData {
-  message?: string;
-}
-export type PostWordsErrorResponse = AxiosError<ErrorData>;
-
 export const POST_WORDS_API_PATH = `${getApiBaseUrl()}/words`;
 
 export const postWords = async (data: PostWordsRequest) => {
