@@ -11,6 +11,8 @@ import { UPDATE_ANSWERS_API_PATH, updateAnswer } from '~/api/update-answer';
 import { useAnswerForm } from '~/hooks/use-answer-form';
 import answerService from '~/sevice/AnswerService';
 import Title from '~/components/Text/Title';
+import { useToastContext } from '~/context/toast';
+import { ErrorResponse } from '~/api';
 
 function Play() {
   const {
@@ -22,6 +24,7 @@ function Play() {
     typeCharacter,
     clearWord,
   } = useAnswerForm();
+  const { openToast } = useToastContext();
 
   const { data } = useQuery<IFetchRandomWordResponse>(FETCH_RANDOM_WORDS_API_PATH, async () => {
     const recentWord = WordsService.getRandomWord();
@@ -62,10 +65,10 @@ function Play() {
         clearWord();
         moveNextAnswer();
       }
-    } catch (e) {
-      /**
-       * TODO: error handling
-       */
+    } catch (error) {
+      openToast({
+        text: (error as ErrorResponse).response?.data.message,
+      });
     }
   };
 
