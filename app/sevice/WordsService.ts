@@ -20,11 +20,16 @@ class WordsService {
     this.randomWordStorage.set(value);
   }
 
+  removeRandomWord() {
+    this.randomWordStorage.remove();
+  }
+
   getSolvedWords() {
     return this.solvedWordsStorage.get() || [];
   }
 
   addSolvedWords(id: string) {
+    this.removeRandomWord();
     const solvedWords = this.getSolvedWords() || [];
     solvedWords.push(id);
     this.solvedWordsStorage.set(solvedWords);

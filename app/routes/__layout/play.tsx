@@ -47,9 +47,9 @@ function Play() {
       onSuccess: (answer) => {
         // TODO: 문제 푼 경우와 못 푼 경우 UX 구분
         if (answer.isSolved || answer.step === answer.maxStep) {
-          navigate(`/word/result?wordId=${answer.wordId}`);
           WordsService.addSolvedWords(answer.wordId);
           answerService.removeCurrentAnswer();
+          navigate(`/word/result?wordId=${answer.wordId}`);
           return;
         }
 
