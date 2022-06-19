@@ -11,6 +11,9 @@ import { UPDATE_ANSWERS_API_PATH, updateAnswer } from '~/api/update-answer';
 import { useAnswerForm } from '~/hooks/use-answer-form';
 import answerService from '~/sevice/AnswerService';
 import Title from '~/components/Text/Title';
+import { useToastContext } from '~/context/toast';
+import { ErrorResponse } from '~/api';
+import { useNavigate } from 'remix';
 
 function Play() {
   const {
@@ -22,6 +25,8 @@ function Play() {
     typeCharacter,
     clearWord,
   } = useAnswerForm();
+  const { openToast } = useToastContext();
+  const navigate = useNavigate();
 
   const { data } = useQuery<IFetchRandomWordResponse>(FETCH_RANDOM_WORDS_API_PATH, async () => {
     const recentWord = WordsService.getRandomWord();
@@ -35,37 +40,47 @@ function Play() {
     return res;
   });
 
-  const { mutateAsync } = useMutation(
+  const { mutate: mutateAnswer } = useMutation(
     UPDATE_ANSWERS_API_PATH(data?.id || '', data?.answerId || ''),
-    updateAnswer
+    updateAnswer,
+    {
+      onSuccess: (answer) => {
+        // TODO: 문제 푼 경우와 못 푼 경우 UX 구분
+        if (answer.isSolved || answer.step === answer.maxStep) {
+          WordsService.addSolvedWords(answer.wordId);
+          answerService.removeCurrentAnswer();
+          navigate(`/word/result?wordId=${answer.wordId}`);
+          return;
+        }
+
+        answerService.setCurrentAnswer(answer);
+        updateAnswerMatrix(answer.answerMatrix);
+        clearWord();
+        moveNextAnswer();
+      },
+      onError: (error: ErrorResponse) => {
+        openToast({
+          text: error.response?.data.message,
+        });
+      },
+    }
   );
 
   const handleKeyClick = async ({ type, value }: Key) => {
-    try {
-      if (type === 'character') {
-        typeCharacter(value);
-        return;
-      }
-      if (type === 'backspace') {
-        deleteCharacter();
-        return;
-      }
-      if (type === 'enter' && data) {
-        const answerRes = await mutateAsync({
-          wordId: data.id,
-          answerId: data.answerId,
-          answer: answers.slice(-1)[0],
-        });
-
-        answerService.setCurrentAnswer(answerRes);
-        updateAnswerMatrix(answerRes.answerMatrix);
-        clearWord();
-        moveNextAnswer();
-      }
-    } catch (e) {
-      /**
-       * TODO: error handling
-       */
+    if (type === 'character') {
+      typeCharacter(value);
+      return;
+    }
+    if (type === 'backspace') {
+      deleteCharacter();
+      return;
+    }
+    if (type === 'enter' && data) {
+      mutateAnswer({
+        wordId: data.id,
+        answerId: data.answerId,
+        answer: answers.slice(-1)[0],
+      });
     }
   };
 

@@ -54,10 +54,10 @@ const useDialogContext = () => {
   const context = useContext(DialogContext);
 
   if (context === null) {
-    throw new Error('useDialogContext should be used within a DialogProvider');
+    throw new Error(`useDialogContext should be used within a ${DialogProvider.name}`);
   }
 
   return context;
 };
 
-export { DialogProvider,useDialogContext };
+export { DialogProvider, useDialogContext };

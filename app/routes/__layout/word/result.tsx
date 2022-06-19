@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import classNames from 'classnames';
 import { useQuery } from 'react-query';
-import { useSearchParams  } from 'remix';
+import { Link, useNavigate, useSearchParams  } from 'remix';
 import { AnswerType } from '~/api';
 import { fetchWordResults, FETCH_WORD_RESULTS_API_PATH } from '~/api/fetch-word-results';
 import Title from '~/components/Text/Title';
@@ -33,6 +33,7 @@ function AnswerMatrix({ answerMatrix }: {answerMatrix: AnswerType[][]}) {
 function Result() {
   const [searchParams] = useSearchParams();
   const wordId = searchParams.get('wordId');
+  const navigate = useNavigate();
 
   // TODO: Global Error handling
   if (wordId === null) throw new Error('wordId is not exist');
@@ -82,6 +83,21 @@ function Result() {
             </li>
           ))}
         </ul>
+
+        {/* TODO: floating UI 컴포넌트 만들기 */}
+        <div className="h-[100px]" />
+        <div className="fixed left-1/2 -translate-x-1/2 max-w-[580px] bottom-0 w-full px-4 pt-4 pb-8">
+          <button
+            type="button"
+            role="link"
+            className="button-lg"
+            onClick={() => {
+              navigate('/play');
+            }}
+          >
+            Play Again
+          </button>
+        </div>
       </section>
     );
   }

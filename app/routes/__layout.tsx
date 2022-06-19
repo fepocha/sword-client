@@ -2,6 +2,7 @@ import { NavLink , Outlet } from 'remix';
 import { NavigationMenu } from '~/components/layout/NavigationMenu';
 import { ThemeToggle } from '~/components/layout/ThemeToggle';
 import { DialogProvider } from '~/context/dialog';
+import { ToastProvider } from '~/context/toast';
 
 export default function Layout() {
   return (
@@ -20,7 +21,9 @@ export default function Layout() {
       </header>
       <main className="pt-header-height">
         <DialogProvider>
-          <Outlet />
+          <ToastProvider>
+            <Outlet />
+          </ToastProvider>
         </DialogProvider>
       </main>
     </div>

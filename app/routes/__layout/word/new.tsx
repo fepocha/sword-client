@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import { postWords, PostWordsErrorResponse, POST_WORDS_API_PATH } from '~/api/post-words';
+import { postWords, POST_WORDS_API_PATH } from '~/api/post-words';
 import type { Key } from '~/components/word/Keyboard';
 import { Keyboard } from '~/components/word/Keyboard';
 import { WordBlock } from '~/components/word/WordBlock';
@@ -11,6 +11,7 @@ import { useWordForm } from '~/hooks/use-word-form';
 import { getMaxLimitHelperText } from '~/utils/helper-text';
 import wordsService from '~/sevice/WordsService';
 import Title from '~/components/Text/Title';
+import { ErrorResponse } from '~/api';
 
 function WordForm({ nickname, description }: { nickname: string; description?: string }) {
   const {
@@ -32,7 +33,7 @@ function WordForm({ nickname, description }: { nickname: string; description?: s
         onClick: () => clearWord(),
       });
     },
-    onError: (error: PostWordsErrorResponse) => {
+    onError: (error: ErrorResponse) => {
       if (error.response?.status === 400) {
         openDialog({
           title: 'Error',

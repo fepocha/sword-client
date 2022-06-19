@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { isWindowDefined } from '~/utils/window';
 
 export interface Word {
@@ -22,6 +23,11 @@ export interface Answer {
   answerMatrix: AnswerType[][]; // 답변 매트릭스 ("0", "1", "2")만 입력 가능
   createdAt: Date; // 생성 일자
 }
+
+interface ErrorData {
+  message?: string;
+}
+export type ErrorResponse = AxiosError<ErrorData>;
 
 export const getApiBaseUrl = () => isWindowDefined() ? window.ENV.API_BASE_URL : '';
 
