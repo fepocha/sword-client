@@ -9,6 +9,16 @@ export const useAnswerForm = () => {
   const [answerMatrix, setAnswerMatrix] = useState<AnswerType[][]>([]);
   const { word, helperText, typeCharacter, deleteCharacter, clearWord } = useWordForm();
 
+  const wrongCharacters = answerMatrix.reduce<string[]>((acc, results, i) => {
+    results.forEach((result, j) => {
+      if (result === '0') {
+        acc.push(answers[i][j]);
+      }
+    });
+
+    return acc;
+  }, []);
+
   const updateAnswerMatrix = (matrix: AnswerType[][]) => {
     setAnswerMatrix(matrix);
   };
@@ -52,5 +62,6 @@ export const useAnswerForm = () => {
     typeCharacter,
     deleteCharacter,
     clearWord,
+    wrongCharacters,
   };
 };

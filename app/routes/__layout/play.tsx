@@ -14,6 +14,7 @@ import Title from '~/components/Text/Title';
 import { useToastContext } from '~/context/toast';
 import { ErrorResponse } from '~/api';
 import { useNavigate } from 'remix';
+import { useState } from 'react';
 
 function Play() {
   const {
@@ -24,6 +25,7 @@ function Play() {
     deleteCharacter,
     typeCharacter,
     clearWord,
+    wrongCharacters,
   } = useAnswerForm();
   const { openToast } = useToastContext();
   const navigate = useNavigate();
@@ -40,11 +42,15 @@ function Play() {
     return res;
   });
 
+  const [disabledCharacters] = useState<string[]>([]);
+
+  const currentAnswer = answers.slice(-1)[0] || '';
+
   const { mutate: mutateAnswer } = useMutation(
     UPDATE_ANSWERS_API_PATH(data?.id || '', data?.answerId || ''),
     updateAnswer,
     {
-      onSuccess: (answer) => {
+      onSuccess: answer => {
         // TODO: 문제 푼 경우와 못 푼 경우 UX 구분
         if (answer.isSolved || answer.step === answer.maxStep) {
           WordsService.addSolvedWords(answer.wordId);
@@ -79,7 +85,7 @@ function Play() {
       mutateAnswer({
         wordId: data.id,
         answerId: data.answerId,
-        answer: answers.slice(-1)[0],
+        answer: currentAnswer,
       });
     }
   };
@@ -94,7 +100,11 @@ function Play() {
         </div>
       ))}
 
-      <Keyboard onKeyClick={handleKeyClick} />
+      <Keyboard
+        onKeyClick={handleKeyClick}
+        disabledEnter={currentAnswer.length < 5}
+        disabledCharacters={wrongCharacters}
+      />
     </section>
   );
 }
