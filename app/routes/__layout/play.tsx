@@ -12,8 +12,11 @@ import { useAnswerForm } from '~/hooks/use-answer-form';
 import answerService from '~/sevice/AnswerService';
 import Title from '~/components/Text/Title';
 import { useToastContext } from '~/context/toast';
-import { ErrorResponse } from '~/api';
+import { AnswerType, ErrorResponse } from '~/api';
 import { useNavigate } from 'remix';
+import KeyStatusService, { KeyStatus } from '~/sevice/KeyStatusService';
+import { useState } from 'react';
+import { isWindowDefined } from '~/utils/window';
 
 function Play() {
   const {
@@ -25,6 +28,29 @@ function Play() {
     typeCharacter,
     clearWord,
   } = useAnswerForm();
+
+  const [keyStatus, setKeyStatus] = useState<KeyStatus>(() => {
+    if (!isWindowDefined()) return {};
+
+    const storedKeyStatus = KeyStatusService.getKeyStatus();
+    if (storedKeyStatus) return storedKeyStatus;
+
+    return {};
+  });
+
+  const updateKeyStatus = ({ currentMatrix, currentAnswer }: { currentMatrix: AnswerType[]; currentAnswer: string; }) => {
+    const keyStatusCopy = { ...keyStatus };
+    const currentChars = currentAnswer.split('');
+
+    currentMatrix.forEach((_keyStatus, idx) => {
+      const memoizedStatus = keyStatusCopy[currentChars[idx]] || -1;
+      keyStatusCopy[currentChars[idx]] = Math.max(memoizedStatus, Number(_keyStatus));
+    });
+
+    KeyStatusService.setKeyStatus(keyStatusCopy);
+    setKeyStatus(keyStatusCopy);
+  };
+
   const { openToast } = useToastContext();
   const navigate = useNavigate();
 
@@ -44,26 +70,35 @@ function Play() {
     UPDATE_ANSWERS_API_PATH(data?.id || '', data?.answerId || ''),
     updateAnswer,
     {
-      onSuccess: (answer) => {
-        if (answer.isSolved || answer.step === answer.maxStep) {
-          updateAnswerMatrix(answer.answerMatrix);
-          WordsService.addSolvedWords(answer.wordId);
+      onSuccess: (result) => {
+        if (result.isSolved || result.step === result.maxStep) {
+          updateAnswerMatrix(result.answerMatrix);
+          updateKeyStatus({
+            currentMatrix: result.answerMatrix.at(-1) as AnswerType[],
+            currentAnswer: result.answers.at(-1) as string,
+          });
+          WordsService.addSolvedWords(result.wordId);
           answerService.removeCurrentAnswer();
+          KeyStatusService.removeKeyStatus();
 
-          if (answer.isSolved) {
+          if (result.isSolved) {
             openToast({ text: 'Great!' });
           } else {
             openToast({ text: 'Game over!' });
           }
 
           setTimeout(() => {
-            navigate(`/word/result?wordId=${answer.wordId}`);
+            navigate(`/word/result?wordId=${result.wordId}`);
           }, 2000);
           return;
         }
 
-        answerService.setCurrentAnswer(answer);
-        updateAnswerMatrix(answer.answerMatrix);
+        answerService.setCurrentAnswer(result);
+        updateAnswerMatrix(result.answerMatrix);
+        updateKeyStatus({
+          currentMatrix: result.answerMatrix.at(-1) as AnswerType[],
+          currentAnswer: result.answers.at(-1) as string,
+        });
         clearWord();
         moveNextAnswer();
       },
@@ -103,7 +138,7 @@ function Play() {
         </div>
       ))}
 
-      <Keyboard onKeyClick={handleKeyClick} />
+      <Keyboard keyStatus={keyStatus} onKeyClick={handleKeyClick} />
     </section>
   );
 }

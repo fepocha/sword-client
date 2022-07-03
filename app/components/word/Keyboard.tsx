@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useMountedState } from 'react-use';
 
 type KeyType = 'character' | 'enter' | 'backspace';
 export type Key = { value: string; type: KeyType };
@@ -41,35 +42,45 @@ const KEYS: Key[][] = [
 ];
 
 interface Props {
+  keyStatus?: Record<string, number>;
   onKeyClick: (key: Key) => void;
 }
 
 export function Keyboard({
+  keyStatus,
   onKeyClick,
 }: Props) {
+  const isMounted = useMountedState();
+
   return (
     <>
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-page grid grid-flow-row gap-3 px-[8px] pb-10 bg-white-mid">
         {KEYS.map((row, idx) => (
           <div
+            // eslint-disable-next-line react/no-array-index-key
             key={`key-${idx}`}
             className={classNames(
               { 'mx-[22px]': idx === 1 },
               'grid grid-flow-col gap-1.5'
             )}>
-            {row.map((key) => (
+            {isMounted() && row.map((key) => (
               <button
                 type="button"
                 key={key.value}
                 onClick={() => onKeyClick(key)}
                 className={classNames(
-                  { 'text-xs': key.type === 'enter' || key.type === 'backspace' },
-                  'flex justify-center items-center bg-white-light rounded-full py-1.5 border-2 border-black-dark text-md shadow-light active:shadow-md dark:shadow-dark dark:active:shadow-lg active:translate-y-0.5'
+                    'flex justify-center items-center bg-white-light rounded-full py-1.5 border-2 border-black-dark text-md shadow-light active:shadow-md dark:shadow-dark dark:active:shadow-lg active:translate-y-0.5',
+                    {
+                      'text-xs': key.type === 'enter' || key.type === 'backspace',
+                      'bg-gray-light': keyStatus?.[key.value] === 0,
+                      'bg-orange-dark': keyStatus?.[key.value] === 1,
+                      'bg-blue-mid': keyStatus?.[key.value] === 2,
+                    },
                 )}
-              >
+                >
                 { key.value }
               </button>
-          ))}
+              ))}
           </div>
       ))}
       </div>

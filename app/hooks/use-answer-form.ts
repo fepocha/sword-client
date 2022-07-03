@@ -18,8 +18,8 @@ export const useAnswerForm = () => {
   };
 
   useEffect(() => {
-    setAnswers(answers => {
-      const answersWithoutCurrent = answers.slice(0, -1);
+    setAnswers(_answers => {
+      const answersWithoutCurrent = _answers.slice(0, -1);
 
       return [...answersWithoutCurrent, word];
     });
