@@ -14,9 +14,8 @@ import Title from '~/components/Text/Title';
 import { useToastContext } from '~/context/toast';
 import { AnswerType, ErrorResponse } from '~/api';
 import { useNavigate } from 'remix';
-import KeyStatusService, { KeyStatus } from '~/sevice/KeyStatusService';
-import { useState } from 'react';
-import { isWindowDefined } from '~/utils/window';
+import KeyStatusService from '~/sevice/KeyStatusService';
+import { useKeyStatus } from '~/hooks/use-key-status';
 
 function Play() {
   const {
@@ -29,27 +28,7 @@ function Play() {
     clearWord,
   } = useAnswerForm();
 
-  const [keyStatus, setKeyStatus] = useState<KeyStatus>(() => {
-    if (!isWindowDefined()) return {};
-
-    const storedKeyStatus = KeyStatusService.getKeyStatus();
-    if (storedKeyStatus) return storedKeyStatus;
-
-    return {};
-  });
-
-  const updateKeyStatus = ({ currentMatrix, currentAnswer }: { currentMatrix: AnswerType[]; currentAnswer: string; }) => {
-    const keyStatusCopy = { ...keyStatus };
-    const currentChars = currentAnswer.split('');
-
-    currentMatrix.forEach((_keyStatus, idx) => {
-      const memoizedStatus = keyStatusCopy[currentChars[idx]] || -1;
-      keyStatusCopy[currentChars[idx]] = Math.max(memoizedStatus, Number(_keyStatus));
-    });
-
-    KeyStatusService.setKeyStatus(keyStatusCopy);
-    setKeyStatus(keyStatusCopy);
-  };
+  const { keyStatus, updateKeyStatus } = useKeyStatus();
 
   const { openToast } = useToastContext();
   const navigate = useNavigate();
