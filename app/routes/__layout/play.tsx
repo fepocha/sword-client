@@ -5,8 +5,8 @@ import {
   fetchRandomWord,
   IFetchRandomWordResponse,
 } from '~/api/fetch-random-word';
-import { WordBlock } from '~/components/word/WordBlock';
-import { Key, Keyboard } from '~/components/word/Keyboard';
+import { WordBlock } from '~/components/Word/WordBlock';
+import { Key, Keyboard } from '~/components/Word/Keyboard';
 import { UPDATE_ANSWERS_API_PATH, updateAnswer } from '~/api/update-answer';
 import { useAnswerForm } from '~/hooks/use-answer-form';
 import answerService from '~/sevice/AnswerService';

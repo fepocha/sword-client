@@ -1,5 +1,5 @@
 import { useState, createContext, useContext, PropsWithChildren, useMemo, useCallback } from 'react';
-import { Dialog, DialogProps } from '~/components/dialog';
+import { Dialog, DialogProps } from '~/components/Dialog';
 
 interface DialogContextType {
   openDialog: (options: DialogProps) => void;

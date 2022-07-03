@@ -1,5 +1,5 @@
 import { useState, createContext, useContext, PropsWithChildren, useMemo, useCallback, useRef } from 'react';
-import { Toast, Props as ToastProps } from '~/components/toast';
+import { Toast, Props as ToastProps } from '~/components/Toast';
 
 interface ToastOption extends Pick<ToastProps, 'text'> {
   duration?: number;

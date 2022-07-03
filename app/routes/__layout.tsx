@@ -1,6 +1,6 @@
 import { NavLink , Outlet } from 'remix';
-import { NavigationMenu } from '~/components/layout/NavigationMenu';
-import { ThemeToggle } from '~/components/layout/ThemeToggle';
+import { NavigationMenu } from '~/components/Layout/NavigationMenu';
+import { ThemeToggle } from '~/components/Layout/ThemeToggle';
 import { DialogProvider } from '~/context/dialog';
 import { ToastProvider } from '~/context/toast';
 
