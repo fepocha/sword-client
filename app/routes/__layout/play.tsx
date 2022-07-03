@@ -111,11 +111,13 @@ function Play() {
     <section className="main-section">
       <Title>Play Game! by {data?.createdBy}</Title>
 
-      {answers.map((answer, i) => (
-        <div className="pb-10" key={i}>
-          <WordBlock characters={answer.split('')} boardStatus={answerMatrix[i]} />
-        </div>
-      ))}
+      <div className="pb-14">
+        {answers.map((answer, i) => (
+          <div className="mb-5 last:mb-0" key={i}>
+            <WordBlock characters={answer.split('')} boardStatus={answerMatrix[i]} />
+          </div>
+        ))}
+      </div>
 
       <Keyboard keyStatus={keyStatus} onKeyClick={handleKeyClick} />
     </section>

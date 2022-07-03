@@ -84,7 +84,7 @@ export function Keyboard({
           </div>
       ))}
       </div>
-      <div className="h-[164px]" />
+      <div className="h-[184px]" />
     </>
   );
 }
