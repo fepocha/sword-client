@@ -16,8 +16,10 @@ import { AnswerType, ErrorResponse } from '~/api';
 import { useNavigate } from 'remix';
 import KeyStatusService from '~/sevice/KeyStatusService';
 import { useKeyStatus } from '~/hooks/use-key-status';
+import { useMountedState } from 'react-use';
 
 function Play() {
+  const isMounted = useMountedState();
   const {
     answers,
     moveNextAnswer,
@@ -26,6 +28,7 @@ function Play() {
     deleteCharacter,
     typeCharacter,
     clearWord,
+    currentWord,
   } = useAnswerForm();
 
   const { keyStatus, updateKeyStatus } = useKeyStatus();
@@ -99,6 +102,12 @@ function Play() {
       return;
     }
     if (type === 'enter' && data) {
+      if (!currentWord || currentWord.length < 5) {
+        openToast({
+          text: 'Enter at least 5 characters',
+        });
+        return;
+      }
       mutateAnswer({
         wordId: data.id,
         answerId: data.answerId,
@@ -107,9 +116,14 @@ function Play() {
     }
   };
 
+  if (!data) {
+    // TODO: Loader 컴포넌트 만들기
+    return <div>Loading...</div>;
+  }
+
   return (
     <section className="main-section">
-      <Title>Play Game! by {data?.createdBy}</Title>
+      <Title>Play Game! by {data.createdBy}</Title>
 
       <div className="pb-14">
         {answers.map((answer, i) => (
@@ -119,7 +133,9 @@ function Play() {
         ))}
       </div>
 
-      <Keyboard keyStatus={keyStatus} onKeyClick={handleKeyClick} />
+      {isMounted() && (
+        <Keyboard keyStatus={keyStatus} onKeyClick={handleKeyClick} />
+      )}
     </section>
   );
 }

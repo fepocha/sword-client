@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { useMountedState } from 'react-use';
 
 type KeyType = 'character' | 'enter' | 'backspace';
 export type Key = { value: string; type: KeyType };
@@ -50,8 +49,6 @@ export function Keyboard({
   keyStatus,
   onKeyClick,
 }: Props) {
-  const isMounted = useMountedState();
-
   return (
     <>
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-page grid grid-flow-row gap-3 px-[8px] pb-10 bg-white-mid">
@@ -63,7 +60,7 @@ export function Keyboard({
               { 'mx-[22px]': idx === 1 },
               'grid grid-flow-col gap-1.5'
             )}>
-            {isMounted() && row.map((key) => (
+            {row.map((key) => (
               <button
                 type="button"
                 key={key.value}
