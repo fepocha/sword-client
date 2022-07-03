@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import classNames from 'classnames';
 import { useQuery } from 'react-query';
-import { Link, useNavigate, useSearchParams  } from 'remix';
+import { useNavigate, useSearchParams  } from 'remix';
 import { AnswerType } from '~/api';
 import { fetchWordResults, FETCH_WORD_RESULTS_API_PATH } from '~/api/fetch-word-results';
 import Title from '~/components/Text/Title';

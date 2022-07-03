@@ -15,11 +15,12 @@ export const useAnswerForm = () => {
 
   const moveNextAnswer = () => {
     setAnswers([...answers, '']);
+    window.scrollTo(0, document.body.scrollHeight);
   };
 
   useEffect(() => {
-    setAnswers(answers => {
-      const answersWithoutCurrent = answers.slice(0, -1);
+    setAnswers(_answers => {
+      const answersWithoutCurrent = _answers.slice(0, -1);
 
       return [...answersWithoutCurrent, word];
     });

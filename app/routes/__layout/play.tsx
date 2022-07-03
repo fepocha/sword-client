@@ -12,10 +12,14 @@ import { useAnswerForm } from '~/hooks/use-answer-form';
 import answerService from '~/sevice/AnswerService';
 import Title from '~/components/Text/Title';
 import { useToastContext } from '~/context/toast';
-import { ErrorResponse } from '~/api';
+import { AnswerType, ErrorResponse } from '~/api';
 import { useNavigate } from 'remix';
+import KeyStatusService from '~/sevice/KeyStatusService';
+import { useKeyStatus } from '~/hooks/use-key-status';
+import { useMountedState } from 'react-use';
 
 function Play() {
+  const isMounted = useMountedState();
   const {
     answers,
     moveNextAnswer,
@@ -24,7 +28,11 @@ function Play() {
     deleteCharacter,
     typeCharacter,
     clearWord,
+    currentWord,
   } = useAnswerForm();
+
+  const { keyStatus, updateKeyStatus } = useKeyStatus();
+
   const { openToast } = useToastContext();
   const navigate = useNavigate();
 
@@ -44,17 +52,35 @@ function Play() {
     UPDATE_ANSWERS_API_PATH(data?.id || '', data?.answerId || ''),
     updateAnswer,
     {
-      onSuccess: (answer) => {
-        // TODO: 문제 푼 경우와 못 푼 경우 UX 구분
-        if (answer.isSolved || answer.step === answer.maxStep) {
-          WordsService.addSolvedWords(answer.wordId);
+      onSuccess: (result) => {
+        if (result.isSolved || result.step === result.maxStep) {
+          updateAnswerMatrix(result.answerMatrix);
+          updateKeyStatus({
+            currentMatrix: result.answerMatrix.at(-1) as AnswerType[],
+            currentAnswer: result.answers.at(-1) as string,
+          });
+          WordsService.addSolvedWords(result.wordId);
           answerService.removeCurrentAnswer();
-          navigate(`/word/result?wordId=${answer.wordId}`);
+          KeyStatusService.removeKeyStatus();
+
+          if (result.isSolved) {
+            openToast({ text: 'Great!' });
+          } else {
+            openToast({ text: 'Game over!' });
+          }
+
+          setTimeout(() => {
+            navigate(`/word/result?wordId=${result.wordId}`);
+          }, 2000);
           return;
         }
 
-        answerService.setCurrentAnswer(answer);
-        updateAnswerMatrix(answer.answerMatrix);
+        answerService.setCurrentAnswer(result);
+        updateAnswerMatrix(result.answerMatrix);
+        updateKeyStatus({
+          currentMatrix: result.answerMatrix.at(-1) as AnswerType[],
+          currentAnswer: result.answers.at(-1) as string,
+        });
         clearWord();
         moveNextAnswer();
       },
@@ -76,6 +102,12 @@ function Play() {
       return;
     }
     if (type === 'enter' && data) {
+      if (!currentWord || currentWord.length < 5) {
+        openToast({
+          text: 'Enter at least 5 characters',
+        });
+        return;
+      }
       mutateAnswer({
         wordId: data.id,
         answerId: data.answerId,
@@ -84,17 +116,26 @@ function Play() {
     }
   };
 
+  if (!data) {
+    // TODO: Loader 컴포넌트 만들기
+    return <div>Loading...</div>;
+  }
+
   return (
     <section className="main-section">
-      <Title>Play Game! by {data?.createdBy}</Title>
+      <Title>Play Game! by {data.createdBy}</Title>
 
-      {answers.map((answer, i) => (
-        <div className="mb-5" key={i}>
-          <WordBlock characters={answer.split('')} boardStatus={answerMatrix[i]} />
-        </div>
-      ))}
+      <div className="pb-14">
+        {answers.map((answer, i) => (
+          <div className="mb-5 last:mb-0" key={i}>
+            <WordBlock characters={answer.split('')} boardStatus={answerMatrix[i]} />
+          </div>
+        ))}
+      </div>
 
-      <Keyboard onKeyClick={handleKeyClick} />
+      {isMounted() && (
+        <Keyboard keyStatus={keyStatus} onKeyClick={handleKeyClick} />
+      )}
     </section>
   );
 }
