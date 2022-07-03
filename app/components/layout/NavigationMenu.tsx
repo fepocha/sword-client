@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { NavLink } from 'remix';
+import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
 const NAVIGATION = [
   {
@@ -26,8 +27,12 @@ export function NavigationMenu() {
 
   return (
     <>
-      <button type="button" onClick={handleMenuToggle}>
-        Menu
+      <button
+        type="button"
+        onClick={handleMenuToggle}
+        className="text-black-dark w-6 h-6"
+      >
+        {isExpanded ? <XIcon className="w-full h-full" />: <MenuIcon className="w-full h-full" />}
       </button>
       {isExpanded && (
         <nav className="fixed top-header-height left-0 w-full z-10 bg-white-mid text-center h-[calc(100vh-theme(space.header-height))] py-14">

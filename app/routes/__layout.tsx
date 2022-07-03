@@ -9,7 +9,7 @@ export default function Layout() {
     <div className="root-container">
       <header className="fixed top-0 left-0 w-full h-header-height flex border-b-[1px] border-gray-light justify-between items-center px-[20px] z-50 bg-white-mid">
         <NavigationMenu />
-        <div className="text-md">
+        <div className="text-md pt-2">
           <NavLink
             to="/play"
             prefetch="intent"
