@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { useNavigate, useSearchParams  } from 'remix';
 import { AnswerType } from '~/api';
 import { fetchWordResults, FETCH_WORD_RESULTS_API_PATH } from '~/api/fetch-word-results';
+import { FloatingContainer } from '~/components/FloadingContainer';
 import Title from '~/components/Text/Title';
 import TypewriterText from '~/components/Text/TypewriterText';
 
@@ -84,9 +85,7 @@ function Result() {
           ))}
         </ul>
 
-        {/* TODO: floating UI 컴포넌트 만들기 */}
-        <div className="h-[100px]" />
-        <div className="fixed left-1/2 -translate-x-1/2 max-w-[580px] bottom-0 w-full px-4 pt-4 pb-8">
+        <FloatingContainer>
           <button
             type="button"
             role="link"
@@ -97,7 +96,7 @@ function Result() {
           >
             Play Again
           </button>
-        </div>
+        </FloatingContainer>
       </section>
     );
   }
