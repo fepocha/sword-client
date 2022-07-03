@@ -45,11 +45,20 @@ function Play() {
     updateAnswer,
     {
       onSuccess: (answer) => {
-        // TODO: 문제 푼 경우와 못 푼 경우 UX 구분
         if (answer.isSolved || answer.step === answer.maxStep) {
+          updateAnswerMatrix(answer.answerMatrix);
           WordsService.addSolvedWords(answer.wordId);
           answerService.removeCurrentAnswer();
-          navigate(`/word/result?wordId=${answer.wordId}`);
+
+          if (answer.isSolved) {
+            openToast({ text: 'Great!' });
+          } else {
+            openToast({ text: 'Game over!' });
+          }
+
+          setTimeout(() => {
+            navigate(`/word/result?wordId=${answer.wordId}`);
+          }, 2000);
           return;
         }
 
@@ -89,7 +98,7 @@ function Play() {
       <Title>Play Game! by {data?.createdBy}</Title>
 
       {answers.map((answer, i) => (
-        <div className="mb-5" key={i}>
+        <div className="pb-10" key={i}>
           <WordBlock characters={answer.split('')} boardStatus={answerMatrix[i]} />
         </div>
       ))}
