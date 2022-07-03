@@ -15,6 +15,7 @@ export const useAnswerForm = () => {
 
   const moveNextAnswer = () => {
     setAnswers([...answers, '']);
+    window.scrollTo(0, document.body.scrollHeight);
   };
 
   useEffect(() => {
