@@ -14,6 +14,8 @@ import Title from '~/components/Text/Title';
 import { useToastContext } from '~/context/toast';
 import { ErrorResponse } from '~/api';
 import { useNavigate } from 'remix';
+import Spinner from '~/components/Loader/Spinner';
+import DotLoader from '~/components/Loader/DotLoader';
 
 function Play() {
   const {
@@ -28,23 +30,26 @@ function Play() {
   const { openToast } = useToastContext();
   const navigate = useNavigate();
 
-  const { data } = useQuery<IFetchRandomWordResponse>(FETCH_RANDOM_WORDS_API_PATH, async () => {
-    const recentWord = WordsService.getRandomWord();
-    if (recentWord) {
-      return recentWord;
+  const { data, isLoading } = useQuery<IFetchRandomWordResponse>(
+    FETCH_RANDOM_WORDS_API_PATH,
+    async () => {
+      const recentWord = WordsService.getRandomWord();
+      if (recentWord) {
+        return recentWord;
+      }
+      const res = await fetchRandomWord({ excludedWords: WordsService.getSolvedWords() });
+
+      WordsService.setRandomWord(res);
+
+      return res;
     }
-    const res = await fetchRandomWord({ excludedWords: WordsService.getSolvedWords() });
-
-    WordsService.setRandomWord(res);
-
-    return res;
-  });
+  );
 
   const { mutate: mutateAnswer } = useMutation(
     UPDATE_ANSWERS_API_PATH(data?.id || '', data?.answerId || ''),
     updateAnswer,
     {
-      onSuccess: (answer) => {
+      onSuccess: answer => {
         // TODO: 문제 푼 경우와 못 푼 경우 UX 구분
         if (answer.isSolved || answer.step === answer.maxStep) {
           WordsService.addSolvedWords(answer.wordId);
@@ -86,7 +91,8 @@ function Play() {
 
   return (
     <section className="main-section">
-      <Title>Play Game! by {data?.createdBy}</Title>
+      {isLoading && <DotLoader />}
+      {!isLoading && <Title>Play Game! by {data?.createdBy}</Title>}
 
       {answers.map((answer, i) => (
         <div className="mb-5" key={i}>
