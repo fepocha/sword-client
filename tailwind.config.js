@@ -39,10 +39,12 @@ module.exports = {
             boxShadow: '0 2em 0 0',
           },
         },
+        vibrate: {},
       },
       animation: {
         typing: 'typing 3s steps(44) 1 normal both, blinkCaret 0.75s steps(44) infinite normal',
         dotLoading: 'dotLoading 1.8s both ease-in-out infinite',
+        vibrating: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1)',
       },
     },
     screens: {

@@ -16,6 +16,7 @@ import { ErrorResponse } from '~/api';
 import { useNavigate } from 'remix';
 import Spinner from '~/components/Loader/Spinner';
 import DotLoader from '~/components/Loader/DotLoader';
+import FullPageLoader from '~/components/Loader/FullPageLoader';
 
 function Play() {
   const {
@@ -30,7 +31,7 @@ function Play() {
   const { openToast } = useToastContext();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useQuery<IFetchRandomWordResponse>(
+  const { data, isLoading: isRandomWordLoading } = useQuery<IFetchRandomWordResponse>(
     FETCH_RANDOM_WORDS_API_PATH,
     async () => {
       const recentWord = WordsService.getRandomWord();
@@ -45,7 +46,7 @@ function Play() {
     }
   );
 
-  const { mutate: mutateAnswer } = useMutation(
+  const { mutate: mutateAnswer, isLoading: isMutateAnswerLoading } = useMutation(
     UPDATE_ANSWERS_API_PATH(data?.id || '', data?.answerId || ''),
     updateAnswer,
     {
@@ -91,8 +92,8 @@ function Play() {
 
   return (
     <section className="main-section">
-      {isLoading && <DotLoader />}
-      {!isLoading && <Title>Play Game! by {data?.createdBy}</Title>}
+      {isRandomWordLoading && <DotLoader />}
+      {!isRandomWordLoading && <Title>Play Game! by {data?.createdBy}</Title>}
 
       {answers.map((answer, i) => (
         <div className="mb-5" key={i}>
@@ -101,6 +102,7 @@ function Play() {
       ))}
 
       <Keyboard onKeyClick={handleKeyClick} />
+      <FullPageLoader type="spinner" isLoading={isMutateAnswerLoading} />
     </section>
   );
 }
