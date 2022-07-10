@@ -53,7 +53,7 @@
     @apply text-xl mb-6
   }
   .main-section {
-    @apply max-w-page px-4 mx-auto pt-10
+    @apply max-w-page px-4 mx-auto pt-8 pb-10
   }
   .button-sm {
     @apply bg-orange-dark px-6 py-2 rounded-md active:bg-opacity-80
