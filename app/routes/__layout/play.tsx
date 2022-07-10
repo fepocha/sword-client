@@ -122,11 +122,6 @@ function Play() {
     }
   };
 
-  if (!data) {
-    // TODO: Loader 컴포넌트 만들기
-    return <div>Loading...</div>;
-  }
-
   return (
     <section className="main-section">
       {isRandomWordLoading && <DotLoader />}
