@@ -25,9 +25,25 @@ module.exports = {
           '50%': { borderColor: 'rgb(var(--color-orange-dark) / var(--tw-bg-opacity))' },
           '100%': { borderColor: 'transparent' },
         },
+        dotLoading: {
+          '0%': {
+            boxShadow: '0 2em 0 -1.3em',
+          },
+          '80%': {
+            boxShadow: '0 2em 0 -1.3em',
+          },
+          '100%': {
+            boxShadow: '0 2em 0 -1.3em',
+          },
+          '40%': {
+            boxShadow: '0 2em 0 0',
+          },
+        },
       },
       animation: {
         typing: 'typing 3s steps(44) 1 normal both, blinkCaret 0.75s steps(44) infinite normal',
+        dotLoading: 'dotLoading 1.8s both ease-in-out infinite',
+        vibrating: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1)',
       },
     },
     screens: {

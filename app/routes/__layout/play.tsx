@@ -14,6 +14,9 @@ import Title from '~/components/Text/Title';
 import { useToastContext } from '~/context/toast';
 import { AnswerType, ErrorResponse } from '~/api';
 import { useNavigate } from 'remix';
+
+import DotLoader from '~/components/Loader/DotLoader';
+import FullPageLoader from '~/components/Loader/FullPageLoader';
 import KeyStatusService from '~/sevice/KeyStatusService';
 import { useKeyStatus } from '~/hooks/use-key-status';
 import { useMountedState } from 'react-use';
@@ -36,23 +39,26 @@ function Play() {
   const { openToast } = useToastContext();
   const navigate = useNavigate();
 
-  const { data } = useQuery<IFetchRandomWordResponse>(FETCH_RANDOM_WORDS_API_PATH, async () => {
-    const recentWord = WordsService.getRandomWord();
-    if (recentWord) {
-      return recentWord;
+  const { data, isLoading: isRandomWordLoading } = useQuery<IFetchRandomWordResponse>(
+    FETCH_RANDOM_WORDS_API_PATH,
+    async () => {
+      const recentWord = WordsService.getRandomWord();
+      if (recentWord) {
+        return recentWord;
+      }
+      const res = await fetchRandomWord({ excludedWords: WordsService.getSolvedWords() });
+
+      WordsService.setRandomWord(res);
+
+      return res;
     }
-    const res = await fetchRandomWord({ excludedWords: WordsService.getSolvedWords() });
+  );
 
-    WordsService.setRandomWord(res);
-
-    return res;
-  });
-
-  const { mutate: mutateAnswer } = useMutation(
+  const { mutate: mutateAnswer, isLoading: isMutateAnswerLoading } = useMutation(
     UPDATE_ANSWERS_API_PATH(data?.id || '', data?.answerId || ''),
     updateAnswer,
     {
-      onSuccess: (result) => {
+      onSuccess: result => {
         if (result.isSolved || result.step === result.maxStep) {
           updateAnswerMatrix(result.answerMatrix);
           updateKeyStatus({
@@ -116,14 +122,10 @@ function Play() {
     }
   };
 
-  if (!data) {
-    // TODO: Loader 컴포넌트 만들기
-    return <div>Loading...</div>;
-  }
-
   return (
     <section className="main-section">
-      <Title>Play Game! by {data.createdBy}</Title>
+      {isRandomWordLoading && <DotLoader />}
+      {!isRandomWordLoading && <Title>Play Game! by {data?.createdBy}</Title>}
 
       <div className="pb-14">
         {answers.map((answer, i) => (
@@ -132,10 +134,8 @@ function Play() {
           </div>
         ))}
       </div>
-
-      {isMounted() && (
-        <Keyboard keyStatus={keyStatus} onKeyClick={handleKeyClick} />
-      )}
+      {isMounted() && <Keyboard keyStatus={keyStatus} onKeyClick={handleKeyClick} />}
+      {isMutateAnswerLoading && <FullPageLoader type="dot" />}
     </section>
   );
 }

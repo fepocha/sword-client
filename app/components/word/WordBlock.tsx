@@ -18,6 +18,13 @@ export function WordBlock({ characters = [], boardStatus = ['', '', '', '', ''] 
               'bg-gray-light': boardStatus[idx] === '0',
               'bg-orange-dark': boardStatus[idx] === '1',
               'bg-blue-mid': boardStatus[idx] === '2',
+            },
+            {
+              'transition-colors': !!boardStatus[idx],
+              'delay-100': idx === 1,
+              'delay-200': idx === 2,
+              'delay-300': idx === 3,
+              'delay-[400ms]': idx === 4,
             }
           )}
         >
