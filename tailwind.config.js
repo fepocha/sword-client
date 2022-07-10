@@ -39,7 +39,6 @@ module.exports = {
             boxShadow: '0 2em 0 0',
           },
         },
-        vibrate: {},
       },
       animation: {
         typing: 'typing 3s steps(44) 1 normal both, blinkCaret 0.75s steps(44) infinite normal',

@@ -102,7 +102,7 @@ function Play() {
       ))}
 
       <Keyboard onKeyClick={handleKeyClick} />
-      <FullPageLoader type="spinner" isLoading={isMutateAnswerLoading} />
+      {isMutateAnswerLoading && <FullPageLoader type="dot" />}
     </section>
   );
 }

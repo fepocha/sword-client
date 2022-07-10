@@ -5,11 +5,10 @@ import DotLoader from '~/components/Loader/DotLoader';
 
 interface FullPageLoaderProps {
   type: 'spinner' | 'dot';
-  isLoading: boolean;
 }
 
-function FullPageLoader({ type, isLoading }: FullPageLoaderProps) {
-  if (!isLoading || typeof window === 'undefined') {
+function FullPageLoader({ type }: FullPageLoaderProps) {
+  if (typeof window === 'undefined') {
     return null;
   }
 
