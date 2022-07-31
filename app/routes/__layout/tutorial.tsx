@@ -48,7 +48,7 @@ export default function TutorialPage() {
         <Title>Game Tutorial</Title>
         <div className="grid gap-4">
           <p>
-            Guess the word in 5 tries.
+            Guess the word in 6 tries.
           </p>
           <p>
             Each guess must be a valid 5-letter word. Hit the enter button to submit.
