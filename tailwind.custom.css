@@ -67,6 +67,9 @@
   .helper-text {
     @apply mt-2 text-orange-light text-sm
   }
+  .link-text {
+    @apply underline hover:opacity-80 active:opacity-80
+  }
 }
 @layer base {
   html {

@@ -4,11 +4,18 @@ export type CharacterType = '' | '0' | '1' | '2';
 interface Props {
   characters: string[];
   boardStatus?: CharacterType[];
+  containerClassName?: string;
 }
 
-export function WordBlock({ characters = [], boardStatus = ['', '', '', '', ''] }: Props) {
+export function WordBlock({ characters = [], boardStatus = ['', '', '', '', ''], containerClassName = '' }: Props) {
   return (
-    <ul className="max-w-[300px] h-[50px] grid grid-cols-5 gap-2 mx-auto">
+    <ul
+      className={
+      classNames(
+        'max-w-[300px] h-[50px] grid grid-cols-5 gap-2 mx-auto',
+        containerClassName
+      )
+    }>
       {new Array(5).fill(0).map((_, idx) => (
         <li
           key={`block-${idx}`}
@@ -25,7 +32,7 @@ export function WordBlock({ characters = [], boardStatus = ['', '', '', '', ''] 
               'delay-200': idx === 2,
               'delay-300': idx === 3,
               'delay-[400ms]': idx === 4,
-            }
+            },
           )}
         >
           {characters[idx]}
