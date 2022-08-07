@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import classNames from 'classnames';
 import { useQuery } from 'react-query';
-import { useNavigate, useSearchParams  } from 'remix';
+import { useNavigate, useSearchParams } from 'remix';
 import { AnswerType } from '~/api';
 import { fetchWordResults, FETCH_WORD_RESULTS_API_PATH } from '~/api/fetch-word-results';
 import { FloatingContainer } from '~/components/FloadingContainer';
