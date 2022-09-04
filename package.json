@@ -16,7 +16,6 @@
     "start": "cross-env NODE_ENV=production remix-serve build",
     "lint": "eslint 'app/**/*.{ts,tsx}'",
     "lint:fix": "eslint 'app/**/*.{ts,tsx}' --fix",
-    "build:worker": "esbuild ./app/entry.worker.ts --outfile=./public/entry.worker.js --minify --bundle --format=esm --define:process.env.NODE_ENV='\"production\"'",
     "dev:worker": "esbuild ./app/entry.worker.ts --outfile=./public/entry.worker.js --bundle --format=esm --define:process.env.NODE_ENV='\"development\"' --watch"
   },
   "dependencies": {
